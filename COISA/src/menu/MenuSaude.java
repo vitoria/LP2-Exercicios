@@ -1,0 +1,58 @@
+package menu;
+
+import classes.Aluno;
+import coisa.Uteis;
+
+public class MenuSaude {
+	private Aluno aluno;
+	private Uteis uteis;
+
+	public MenuSaude(Aluno aluno) {
+		this.aluno = aluno;
+		uteis = new Uteis();
+	}
+
+	public void display() {
+
+		final String MENU = "\n------- MENU SAUDE -------\n" +
+							"1- Alterar Saude Mental\n" +
+							"2- Alterar Saude Fisica\n"+
+							"3- Ver Detalhes\n" +
+							"4- Voltar\n" +
+							"Digite a Opcao Desejada: ";
+		final int ALTERAR_SAUDE_MENTAL = 1;
+		final int ALTERAR_SAUDE_FISICA = 2;
+		final int VER_DETALHES = 3;
+		final int VOLTAR = 4;
+		int op;
+
+		do {
+			op = uteis.leInt(MENU);
+			switch (op) {
+			case ALTERAR_SAUDE_MENTAL:
+				alteraSaudeMental();
+				break;
+			case ALTERAR_SAUDE_FISICA:
+				alteraSaudeFisica();
+				break;
+			case VER_DETALHES:
+				System.out.println("Saude geral: " + aluno.geral());
+				break;
+			case VOLTAR:
+				break;
+			default:
+				System.out.println("Opcao invalida!");
+			}
+		} while (op != VOLTAR);
+	}
+
+	private void alteraSaudeMental() {
+		aluno.defineSaudeMental(uteis.leString("Estado (boa/fraca): "));
+		aluno.defineSaudeEmoji(uteis.leString("Emoji (opcional): "));
+	}
+
+	private void alteraSaudeFisica() {
+		aluno.defineSaudeFisica(uteis.leString("Estado (boa/fraca): "));
+		aluno.defineSaudeEmoji(uteis.leString("Emoji (opcional): "));
+	}
+}

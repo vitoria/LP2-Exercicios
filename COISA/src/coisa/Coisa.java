@@ -1,5 +1,8 @@
 package coisa;
 
+import classes.Aluno;
+import classes.Saude;
+
 /**
  * @author vitoriahpss
  */
