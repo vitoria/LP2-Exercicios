@@ -1,15 +1,15 @@
 package menu;
 
 import classes.Aluno;
-import coisa.Uteis;
+import utils.LeituraDeDados;
 
 public class MenuContasCantina {
 	private Aluno aluno;
-	private Uteis uteis;
+	private LeituraDeDados leituraDeDados;
 	
 	public MenuContasCantina(Aluno aluno) {
 		this.aluno = aluno;
-		uteis = new Uteis();
+		leituraDeDados = new LeituraDeDados();
 	}
 	
     public void display(){
@@ -25,7 +25,7 @@ public class MenuContasCantina {
         int opc;
         
         do {
-            opc = uteis.leInt(MENU);
+            opc = leituraDeDados.leInt(MENU);
             switch(opc){
                 case CADASTRAR:
                     criaContaCantina();
@@ -44,12 +44,12 @@ public class MenuContasCantina {
     
 	
     private void criaContaCantina(){
-        aluno.cadastraCantina(uteis.leString("Nome da Cantina: "));
+        aluno.cadastraCantina(leituraDeDados.leString("Nome da Cantina: "));
     }
     
     private void exploraCantina(){
         
-        String nome = uteis.leString("Nome da Cantina: ");
+        String nome = leituraDeDados.leString("Nome da Cantina: ");
         final String MENU = "\n------- EXPLORAR CONTA DA " + nome + " -------\n"
                             + "1- Cadastrar Lanche\n"
                             + "2- Pagar Conta\n"
@@ -63,13 +63,13 @@ public class MenuContasCantina {
         int op;
         
         do{
-            op = uteis.leInt(MENU);
+            op = leituraDeDados.leInt(MENU);
             switch(op){
                 case CADASTRAR:
                     cadastraLanche(nome);
                     break;
                 case PAGAR:
-                    aluno.pagarConta(nome, uteis.leInt("Valor (centavos): "));
+                    aluno.pagarConta(nome, leituraDeDados.leInt("Valor (centavos): "));
                     break;
                 case VER:
                     System.out.println(aluno.cantinaToString(nome));
@@ -84,8 +84,8 @@ public class MenuContasCantina {
     }
     
     private void cadastraLanche(String nome){
-        int qtd = uteis.leInt("Quantidade de Itens: ");
-        int valor = uteis.leInt("Valor Total da Compra (cents): ");
+        int qtd = leituraDeDados.leInt("Quantidade de Itens: ");
+        int valor = leituraDeDados.leInt("Valor Total da Compra (cents): ");
         aluno.cadastraLanche(nome, qtd, valor);
     }
     

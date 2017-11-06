@@ -1,15 +1,15 @@
 package menu;
 
 import classes.Aluno;
-import coisa.Uteis;
+import utils.LeituraDeDados;
 
 public class MenuSaude {
 	private Aluno aluno;
-	private Uteis uteis;
+	private LeituraDeDados leituraDeDados;
 
 	public MenuSaude(Aluno aluno) {
 		this.aluno = aluno;
-		uteis = new Uteis();
+		leituraDeDados = new LeituraDeDados();
 	}
 
 	public void display() {
@@ -27,7 +27,7 @@ public class MenuSaude {
 		int op;
 
 		do {
-			op = uteis.leInt(MENU);
+			op = leituraDeDados.leInt(MENU);
 			switch (op) {
 			case ALTERAR_SAUDE_MENTAL:
 				alteraSaudeMental();
@@ -47,12 +47,12 @@ public class MenuSaude {
 	}
 
 	private void alteraSaudeMental() {
-		aluno.defineSaudeMental(uteis.leString("Estado (boa/fraca): "));
-		aluno.defineSaudeEmoji(uteis.leString("Emoji (opcional): "));
+		aluno.defineSaudeMental(leituraDeDados.leString("Estado (boa/fraca): "));
+		aluno.defineSaudeEmoji(leituraDeDados.leString("Emoji (opcional): "));
 	}
 
 	private void alteraSaudeFisica() {
-		aluno.defineSaudeFisica(uteis.leString("Estado (boa/fraca): "));
-		aluno.defineSaudeEmoji(uteis.leString("Emoji (opcional): "));
+		aluno.defineSaudeFisica(leituraDeDados.leString("Estado (boa/fraca): "));
+		aluno.defineSaudeEmoji(leituraDeDados.leString("Emoji (opcional): "));
 	}
 }

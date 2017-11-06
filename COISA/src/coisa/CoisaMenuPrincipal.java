@@ -10,6 +10,7 @@ import menu.MenuContasCantina;
 import menu.MenuContasLaboratorio;
 import menu.MenuDisciplinas;
 import menu.MenuSaude;
+import utils.LeituraDeDados;
 
 /**
  *
@@ -39,7 +40,7 @@ public class CoisaMenuPrincipal {
         MenuContasCantina menuContasCantina = new MenuContasCantina(aluno);
         MenuDisciplinas menuDisciplina = new MenuDisciplinas(aluno);
         MenuSaude menuSaude = new MenuSaude(aluno);
-        Uteis u = new Uteis();
+        LeituraDeDados u = new LeituraDeDados();
         int opc;
         
         do {

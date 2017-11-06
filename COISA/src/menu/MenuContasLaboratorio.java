@@ -1,15 +1,15 @@
 package menu;
 
 import classes.Aluno;
-import coisa.Uteis;
+import utils.LeituraDeDados;
 
 public class MenuContasLaboratorio {
 	private Aluno aluno;
-	private Uteis uteis;
+	private LeituraDeDados leituraDeDados;
 
 	public MenuContasLaboratorio(Aluno aluno) {
 		this.aluno = aluno;
-		uteis = new Uteis();
+		leituraDeDados = new LeituraDeDados();
 	}
 
 	public void display() {
@@ -25,7 +25,7 @@ public class MenuContasLaboratorio {
 		int op;
 
 		do {
-			op = uteis.leInt(menu);
+			op = leituraDeDados.leInt(menu);
 			switch (op) {
 			case CADASTRAR:
 				criaContaLaboratorio();
@@ -42,15 +42,15 @@ public class MenuContasLaboratorio {
 	}
 
     private void criaContaLaboratorio(){
-        String nome = uteis.leString("Nome do Laboratorio: ");
-        String cota = uteis.leString("Cota de Armazenamento (opcional): ");
+        String nome = leituraDeDados.leString("Nome do Laboratorio: ");
+        String cota = leituraDeDados.leString("Cota de Armazenamento (opcional): ");
         if(cota.equals("")) aluno.cadastraLaboratorio(nome);
         else aluno.cadastraLaboratorio(nome, Integer.parseInt(cota));
     }
     
     private void exploraContaLaboratorio(){
         
-        String nome = uteis.leString("Nome do lab: ");
+        String nome = leituraDeDados.leString("Nome do lab: ");
         final String MENU = "\n------- EXPLORAR CONTA DO " + nome + " -------\n"
                             + "1- Consumir Espaco\n"
                             + "2- Liberar Espaco\n"
@@ -66,13 +66,13 @@ public class MenuContasLaboratorio {
         int op;
         
         do{
-            op = uteis.leInt(MENU);
+            op = leituraDeDados.leInt(MENU);
             switch(op){
                 case CONSUMIR:
-                    aluno.consomeEspaco(nome, uteis.leInt("Espaco: "));
+                    aluno.consomeEspaco(nome, leituraDeDados.leInt("Espaco: "));
                     break;
                 case LIBERAR:
-                    aluno.liberaEspaco(nome, uteis.leInt("Espaco "));
+                    aluno.liberaEspaco(nome, leituraDeDados.leInt("Espaco "));
                     break;
                 case ATINGIU:
                     System.out.println("Atingiu cota:" + aluno.atingiuCota(nome));

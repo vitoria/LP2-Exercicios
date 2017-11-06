@@ -1,36 +1,16 @@
-package coisa;
-
-import java.util.Scanner;
+package utils;
 
 import classes.ContaCantina;
 import classes.ContaLaboratorio;
 import classes.Disciplina;
 
-public class Uteis {
-	private Scanner sc;
-	
-	public Uteis() {
-		sc = new Scanner(System.in);
-	}
-	
-    public int leInt(String msg){
-        System.out.print(msg);
-        int num = sc.nextInt();
-        sc.nextLine();
-        return num;
-    }
-
-    public double leDouble(String msg){
-        System.out.print(msg);
-        double num = Double.parseDouble(sc.nextLine());
-        return num;
-    }
-    
-    public String leString(String msg){
-        System.out.print(msg);
-        return sc.nextLine();
-    }
-    
+/**
+ * Classe que trabalha com a manipulacao de arrays em suas operacoes de busca e expensao
+ * de tamanho
+ *
+ * @author Vitória Heliane
+ */
+public class ManipulacaoDeArray {
 	/**
 	 * Procura a conta no array de contas que tenha o nome igual ao recebido.
 	 * 
@@ -127,5 +107,4 @@ public class Uteis {
 		}
 		return newContas;
 	}
-	
 }

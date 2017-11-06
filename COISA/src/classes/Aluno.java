@@ -1,6 +1,6 @@
 package classes;
 
-import coisa.Uteis;
+import utils.ManipulacaoDeArray;
 
 /**
  * Representação de um aluno da UFCG, especificamente do Curso Ciência da
@@ -19,7 +19,7 @@ public class Aluno {
 	private int qtdContasLab;
 	private int qtdContasCantina;
 	private int qtdDisciplinas;
-	private Uteis uteis;
+	private ManipulacaoDeArray manipucalacaoArray;
 
 	/**
 	 * Constrói um aluno recebendo nenhuma informação por parâmetro. Todo aluno é
@@ -34,7 +34,7 @@ public class Aluno {
 		contasCantina = new ContaCantina[10];
 		disciplinas = new Disciplina[10];
 		saude = new Saude();
-		uteis = new Uteis();
+		manipucalacaoArray = new ManipulacaoDeArray();
 	}
 
 	/**
@@ -49,7 +49,7 @@ public class Aluno {
 	 */
 	public void cadastraLaboratorio(String nomeLaboratorio) {
 		if (qtdContasLab >= contasLab.length)
-			contasLab = uteis.aumentarArrayLab(contasLab);
+			contasLab = manipucalacaoArray.aumentarArrayLab(contasLab);
 		contasLab[qtdContasLab++] = new ContaLaboratorio(nomeLaboratorio);
 	}
 
@@ -67,7 +67,7 @@ public class Aluno {
 	 */
 	public void cadastraLaboratorio(String nomeLaboratorio, int cota) {
 		if (qtdContasLab >= contasLab.length)
-			contasLab = uteis.aumentarArrayLab(contasLab);
+			contasLab = manipucalacaoArray.aumentarArrayLab(contasLab);
 		contasLab[qtdContasLab++] = new ContaLaboratorio(nomeLaboratorio, cota);
 	}
 
@@ -82,7 +82,7 @@ public class Aluno {
 	 * @returns null
 	 */
 	public void consomeEspaco(String nomeLaboratorio, int mbytes) {
-		ContaLaboratorio conta = uteis.buscarLab(contasLab, nomeLaboratorio);
+		ContaLaboratorio conta = manipucalacaoArray.buscarLab(contasLab, nomeLaboratorio);
 		if (conta != null) {
 			conta.consomeEspaco(mbytes);
 		}
@@ -100,7 +100,7 @@ public class Aluno {
 	 * @returns null
 	 */
 	public void liberaEspaco(String nomeLaboratorio, int mbytes) {
-		ContaLaboratorio conta = uteis.buscarLab(contasLab, nomeLaboratorio);
+		ContaLaboratorio conta = manipucalacaoArray.buscarLab(contasLab, nomeLaboratorio);
 		if (conta != null) {
 			conta.liberaEspaco(mbytes);
 		}
@@ -115,7 +115,7 @@ public class Aluno {
 	 * @returns boolean que indica se atingiu ou não a conta de armazenamento.
 	 */
 	public boolean atingiuCota(String nomeLaboratorio) {
-		ContaLaboratorio conta = uteis.buscarLab(contasLab, nomeLaboratorio);
+		ContaLaboratorio conta = manipucalacaoArray.buscarLab(contasLab, nomeLaboratorio);
 		if (conta != null) {
 			return conta.atingiuCota();
 		}
@@ -131,7 +131,7 @@ public class Aluno {
 	 * @returns a string com a representação do estado da conta do lab
 	 */
 	public String laboratorioToString(String nomeLaboratorio) {
-		ContaLaboratorio conta = uteis.buscarLab(contasLab, nomeLaboratorio);
+		ContaLaboratorio conta = manipucalacaoArray.buscarLab(contasLab, nomeLaboratorio);
 		if (conta != null)
 			return conta.toString();
 		return "Laboratorio nao encontrado! :(";
@@ -148,7 +148,7 @@ public class Aluno {
 	 */
 	public void cadastraDisciplina(String nomeDisciplina) {
 		if (qtdDisciplinas >= disciplinas.length) {
-			disciplinas = uteis.aumentarArrayDisciplina(disciplinas);
+			disciplinas = manipucalacaoArray.aumentarArrayDisciplina(disciplinas);
 		}
 		disciplinas[qtdDisciplinas++] = new Disciplina(nomeDisciplina);
 	}
@@ -162,7 +162,7 @@ public class Aluno {
 	 * @returns null
 	 */
 	public void cadastraHoras(String nomeDisciplina, int horas) {
-		Disciplina disciplina = uteis.buscarDisciplina(disciplinas, nomeDisciplina);
+		Disciplina disciplina = manipucalacaoArray.buscarDisciplina(disciplinas, nomeDisciplina);
 		disciplina.cadastraHoras(horas);
 	}
 
@@ -180,7 +180,7 @@ public class Aluno {
 	 * @returns null
 	 */
 	public void cadastraNota(String nomeDisciplina, int estagio, double valorNota) {
-		Disciplina disciplina = uteis.buscarDisciplina(disciplinas, nomeDisciplina);
+		Disciplina disciplina = manipucalacaoArray.buscarDisciplina(disciplinas, nomeDisciplina);
 		disciplina.cadastraNota(estagio, valorNota);
 	}
 
@@ -192,7 +192,7 @@ public class Aluno {
 	 * @returns valor boolean que indica se foi aprovado ou não na disiciplina.
 	 */
 	public boolean aprovado(String nomeDisciplina) {
-		Disciplina disciplina = uteis.buscarDisciplina(disciplinas, nomeDisciplina);
+		Disciplina disciplina = manipucalacaoArray.buscarDisciplina(disciplinas, nomeDisciplina);
 		return disciplina.aprovado();
 	}
 
@@ -205,7 +205,7 @@ public class Aluno {
 	 * @returns uma string que representado o estado da disciplina
 	 */
 	public String disciplinaToString(String nomeDisciplina) {
-		Disciplina disciplina = uteis.buscarDisciplina(disciplinas, nomeDisciplina);
+		Disciplina disciplina = manipucalacaoArray.buscarDisciplina(disciplinas, nomeDisciplina);
 		return disciplina.toString();
 	}
 
@@ -220,7 +220,7 @@ public class Aluno {
 	 */
 	public void cadastraCantina(String nomeCantina) {
 		if (qtdContasCantina >= contasCantina.length) {
-			contasCantina = uteis.aumentarArrayCantina(contasCantina);
+			contasCantina = manipucalacaoArray.aumentarArrayCantina(contasCantina);
 		}
 		contasCantina[qtdContasCantina++] = new ContaCantina(nomeCantina);
 	}
@@ -237,7 +237,7 @@ public class Aluno {
 	 * @returns null
 	 */
 	public void cadastraLanche(String nomeCantina, int qtdItens, int valorCentavos) {
-		ContaCantina conta = uteis.buscarCantina(contasCantina, nomeCantina);
+		ContaCantina conta = manipucalacaoArray.buscarCantina(contasCantina, nomeCantina);
 		conta.cadastraLanche(qtdItens, valorCentavos);
 	}
 
@@ -252,7 +252,7 @@ public class Aluno {
 	 * @returns null
 	 */
 	public void pagarConta(String nomeCantina, int valorCentavos) {
-		ContaCantina conta = uteis.buscarCantina(contasCantina, nomeCantina);
+		ContaCantina conta = manipucalacaoArray.buscarCantina(contasCantina, nomeCantina);
 		conta.pagaConta(valorCentavos);
 	}
 
@@ -265,7 +265,7 @@ public class Aluno {
 	 * @returns uma string com o estado da conta
 	 */
 	public String cantinaToString(String nomeCantina) {
-		ContaCantina conta = uteis.buscarCantina(contasCantina, nomeCantina);
+		ContaCantina conta = manipucalacaoArray.buscarCantina(contasCantina, nomeCantina);
 		if (conta != null)
 			return conta.toString();
 		return "Cantina nao encontrada! :(";

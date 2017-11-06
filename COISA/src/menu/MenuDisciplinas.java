@@ -1,15 +1,15 @@
 package menu;
 
 import classes.Aluno;
-import coisa.Uteis;
+import utils.LeituraDeDados;
 
 public class MenuDisciplinas {
 	private Aluno aluno;
-	private Uteis uteis;
+	private LeituraDeDados leituraDeDados;
 
 	public MenuDisciplinas(Aluno aluno) {
 		this.aluno = aluno;
-		uteis = new Uteis();
+		leituraDeDados = new LeituraDeDados();
 	}
 
 	public void display() {
@@ -25,7 +25,7 @@ public class MenuDisciplinas {
 		int opc;
 
 		do {
-			opc = uteis.leInt(MENU);
+			opc = leituraDeDados.leInt(MENU);
 			switch (opc) {
 			case CADASTRAR:
 				cadastraDisciplina();
@@ -43,12 +43,12 @@ public class MenuDisciplinas {
 	}
 
 	private void cadastraDisciplina() {
-		aluno.cadastraDisciplina(uteis.leString("Nome da Disciplina: "));
+		aluno.cadastraDisciplina(leituraDeDados.leString("Nome da Disciplina: "));
 	}
 
 	private void exploraDisciplina() {
 
-		String nome = uteis.leString("Nome da Disciplina: ");
+		String nome = leituraDeDados.leString("Nome da Disciplina: ");
 		final String MENU = "\n------- EXPLORAR DISCIPLINA DE " + nome + " -------\n" + 
 							"1- Cadastrar Horas\n"+
 							"2- Cadastrar Nota\n" +
@@ -64,13 +64,13 @@ public class MenuDisciplinas {
 		int op;
 
 		do {
-			op = uteis.leInt(MENU);
+			op = leituraDeDados.leInt(MENU);
 			switch (op) {
 			case CADASTRAR_HORAS:
-				aluno.cadastraHoras(nome, uteis.leInt("Quantidade de Horas: "));
+				aluno.cadastraHoras(nome, leituraDeDados.leInt("Quantidade de Horas: "));
 				break;
 			case CADASTRAR_NOTA:
-				aluno.cadastraNota(nome, uteis.leInt("Estagio: "), uteis.leDouble("Nota: "));
+				aluno.cadastraNota(nome, leituraDeDados.leInt("Estagio: "), leituraDeDados.leDouble("Nota: "));
 				break;
 			case APROVACAO:
 				System.out.println("Aprovado(a): " + aluno.aprovado(nome));
