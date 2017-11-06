@@ -34,6 +34,7 @@ public class Aluno {
         contasLab = new ContaLaboratorio[10];
         contasCantina = new ContaCantina[10];
         disciplinas = new Disciplina[10];
+        saude = new Saude();
     }	
     /**
     * Retorna a String que representa o aluno. A representação segue o formato
@@ -101,6 +102,10 @@ public class Aluno {
         ContaLaboratorio conta = buscarLab(nomeLaboratorio);
         if(conta != null) return conta.toString();
         return "Laboratorio nao encontrado! :(";
+    }
+    
+    public ContaLaboratorio[] getContasLaboratorio(){
+        return contasLab;
     }
     
     private ContaLaboratorio buscarLab(String nomeLab){
@@ -173,6 +178,7 @@ public class Aluno {
     
     private ContaCantina buscarCantina(String nomeCantina){
         for(ContaCantina conta : contasCantina){
+            if (conta == null) break;
             if(conta.getNome().equals(nomeCantina)) return conta;
         }
         return null;
@@ -186,6 +192,9 @@ public class Aluno {
         saude.defineSaudeFisica(valor);
     }
     
+    public void defineSaudeEmoji(String valor){
+        saude.definirEmoji(valor);
+    }
     public String geral(){
         return saude.geral();
     }   
