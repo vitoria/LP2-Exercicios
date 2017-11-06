@@ -11,7 +11,12 @@ public class MenuContasCantina {
 		this.aluno = aluno;
 		leituraDeDados = new LeituraDeDados();
 	}
-	
+	/**
+	 * Exibe o menu com as operacoes que podem ser realizadas com as contas de cantina do aluno
+	 * Le a opcao desejada por ele e, a partir disso, executa a funcao escolhida
+	 * 
+	 * @returns null
+	 */
     public void display(){
         
         final String MENU = "\n---------- MENU DAS CONTAS DAS CANTINA ---------\n"
@@ -46,7 +51,12 @@ public class MenuContasCantina {
     private void criaContaCantina(){
         aluno.cadastraCantina(leituraDeDados.leString("Nome da Cantina: "));
     }
-    
+	/**
+	 * Exibe o menu com as operacoes que podem ser realizadas com a conta de uma cantina do aluno
+	 * Le a opcao desejada por ele e, a partir disso, executa a funcao escolhida
+	 * 
+	 * @returns null
+	 */
     private void exploraCantina(){
         
         String nome = leituraDeDados.leString("Nome da Cantina: ");

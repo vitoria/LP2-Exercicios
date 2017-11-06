@@ -1,15 +1,13 @@
 package classes;
 
-/*
- * Representação de uma conta de algum laboratório
- * de computação da UFCG. Cada laboratório possui
- * um nome, uma cota de armazenamento de dados e
- * a informação de quanto espaço está sendo utilizado.
+/**
+ * Representação de uma conta de algum laboratório de computação da UFCG. Cada
+ * laboratório possui um nome, uma cota de armazenamento de dados e a informação
+ * de quanto espaço está sendo utilizado.
+ * 
  * @author vitoriahpss
  */
 public class ContaLaboratorio {
-
-	// Informações da contado laboratório
 	private String nomeLab;
 	private int espacoOcupado;
 	private int cota;

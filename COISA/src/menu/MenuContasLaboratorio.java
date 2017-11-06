@@ -11,12 +11,17 @@ public class MenuContasLaboratorio {
 		this.aluno = aluno;
 		leituraDeDados = new LeituraDeDados();
 	}
-
+	/**
+	 * Exibe o menu com as operacoes que podem ser realizadas com as contas de laboratorio do aluno
+	 * Le a opcao desejada por ele e, a partir disso, executa a funcao escolhida
+	 * 
+	 * @returns null
+	 */
 	public void display() {
 
 		final String menu = "\n------- MENU DAS CONTAS DE LABORATORIO -------\n" +
 							"1- Cadastrar Laboratorio\n"+
-							"2- Explorar i-esimo Laboratorio\n" +
+							"2- Explorar Laboratorio\n" +
 							"3- Voltar\n" +
 							"Digite a Opcao Desejada: ";
 		final int CADASTRAR = 1;
@@ -47,7 +52,12 @@ public class MenuContasLaboratorio {
         if(cota.equals("")) aluno.cadastraLaboratorio(nome);
         else aluno.cadastraLaboratorio(nome, Integer.parseInt(cota));
     }
-    
+	/**
+	 * Exibe o menu com as operacoes que podem ser realizadas com uma conta de laboratorio do aluno
+	 * Le a opcao desejada por ele e, a partir disso, executa a funcao escolhida
+	 * 
+	 * @returns null
+	 */
     private void exploraContaLaboratorio(){
         
         String nome = leituraDeDados.leString("Nome do lab: ");

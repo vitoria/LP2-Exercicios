@@ -11,7 +11,12 @@ public class MenuSaude {
 		this.aluno = aluno;
 		leituraDeDados = new LeituraDeDados();
 	}
-
+	/**
+	 * Exibe o menu com as operacoes que podem ser realizadas com a saude do aluno
+	 * Le a opcao desejada por ela e, a partir disso, executa a funcao escolhida
+	 * 
+	 * @returns null
+	 */
 	public void display() {
 
 		final String MENU = "\n------- MENU SAUDE -------\n" +

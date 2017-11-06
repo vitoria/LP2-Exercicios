@@ -11,7 +11,12 @@ public class MenuDisciplinas {
 		this.aluno = aluno;
 		leituraDeDados = new LeituraDeDados();
 	}
-
+	/**
+	 * Exibe o menu com as operacoes que podem ser realizadas com as disciplinas do aluno
+	 * Le a opcao desejada por ela e, a partir disso, executa a funcao escolhida
+	 * 
+	 * @returns null
+	 */
 	public void display() {
 
 		final String MENU = "\n---------- MENU DAS CONTAS DAS DISCIPLINAS ---------\n" + 
@@ -45,7 +50,12 @@ public class MenuDisciplinas {
 	private void cadastraDisciplina() {
 		aluno.cadastraDisciplina(leituraDeDados.leString("Nome da Disciplina: "));
 	}
-
+	/**
+	 * Exibe o menu com as operacoes que podem ser realizadas com uma disciplina do aluno
+	 * Le a opcao desejada por ela e, a partir disso, executa a funcao escolhida
+	 * 
+	 * @returns null
+	 */
 	private void exploraDisciplina() {
 
 		String nome = leituraDeDados.leString("Nome da Disciplina: ");

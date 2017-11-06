@@ -28,7 +28,7 @@ public class CoisaMenuPrincipal {
                                         + "3- Disciplinas\n"
                                         + "4- Saúde\n"
                                         + "5- Sair\n"
-                                        + "Dgite a Opcao Desejada: ";
+                                        + "Digite a Opcao Desejada: ";
         final int MENU_LABORATORIOS = 1;
         final int MENU_CANTINAS = 2;
         final int MENU_DISCIPLINAS = 3;
