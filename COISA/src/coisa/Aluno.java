@@ -37,8 +37,9 @@ public class Aluno {
         saude = new Saude();
     }	
     /**
-    * Retorna a String que representa o aluno. A representação segue o formato
-    * “MATRICULA - Nome do Aluno”.
+    * Retorna a String que representa o aluno. 
+    *
+   * @returns a representação em String de um aluno.
    */
     public void cadastraLaboratorio(String nomeLaboratorio){
         if(qtdContasLab >= contasLab.length)
