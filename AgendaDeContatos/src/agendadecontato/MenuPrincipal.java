@@ -40,12 +40,16 @@ public class MenuPrincipal {
 	}
 	
 	private static void cadastrarContato(Agenda agenda, Scanner teclado) {
-		int posicao = LeituraDeDados.leInt("Posição: ", teclado);
-		String nome = LeituraDeDados.leString("Nome: ", teclado);
-		String sobrenome = LeituraDeDados.leString("Sobrenome: ", teclado);
-		String telefone = LeituraDeDados.leString("Telefone: ", teclado);
-		agenda.cadastrarContato(nome,  sobrenome, telefone, posicao);
-		System.out.println("CADASTRO REALIZADO!\n");
+		try {
+			int posicao = LeituraDeDados.leInt("Posição: ", teclado);
+			String nome = LeituraDeDados.leString("Nome: ", teclado);
+			String sobrenome = LeituraDeDados.leString("Sobrenome: ", teclado);
+			String telefone = LeituraDeDados.leString("Telefone: ", teclado);
+			agenda.cadastrarContato(nome,  sobrenome, telefone, posicao);
+			System.out.println("CADASTRO REALIZADO!\n");
+		} catch(IndexOutOfBoundsException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 	
 	private static void listarContatos(Agenda agenda) {
@@ -54,6 +58,12 @@ public class MenuPrincipal {
 	
 	private static void exibirContato(Agenda agenda, Scanner teclado) {
 		int posicao = LeituraDeDados.leInt("Contato> ", teclado);
-		System.out.println(agenda.contatoToString(posicao));
+		try {
+			System.out.println(agenda.pesquisarContato(posicao));
+		} catch(IndexOutOfBoundsException e) {
+			System.out.println(e.getMessage());
+		} catch(NullPointerException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 }

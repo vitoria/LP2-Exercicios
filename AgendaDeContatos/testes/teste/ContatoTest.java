@@ -4,15 +4,14 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.experimental.categories.Categories.ExcludeCategory;
 
 import classes.Contato;
 
 public class ContatoTest {
-	private Contato contato;
 	private static final String ERROR_VAZIO = "Nenhum parametro do construtor de Contato pode ser vazio";
 	private static final String ERROR_NULL = "Parâmetros do construtor de Contato não podem ser nulos";
 	private static final String MSG_FAIL = "Deveria ter lançado uma exceção de IllegalArgumentException";
+	private Contato contato;
 
 	@Before
 	public void setUp() throws Exception {
@@ -28,22 +27,20 @@ public class ContatoTest {
 
 	@Test
 	public void testContatoNull() {
-		Contato c;
-		//Testes para parâmetros null
 		try {
-			c = new Contato(null, "Heliane", "83991697808");
+			new Contato(null, "Heliane", "83991697808");
 			fail(MSG_FAIL);
 		} catch(NullPointerException e) {
 			assertEquals(ERROR_NULL, e.getMessage());
 		}
 		try {
-			c = new Contato("Vitoria", null, "83991697808");
+			new Contato("Vitoria", null, "83991697808");
 			fail(MSG_FAIL);
 		} catch(NullPointerException e) {
 			assertEquals(ERROR_NULL, e.getMessage());
 		}
 		try {
-			c = new Contato("Vitoria", "Heliane", null);
+			new Contato("Vitoria", "Heliane", null);
 			fail(MSG_FAIL);
 		} catch(NullPointerException e) {
 			assertEquals(ERROR_NULL, e.getMessage());
@@ -52,22 +49,20 @@ public class ContatoTest {
 	
 	@Test
 	public void testContatoVazio() {
-		Contato c;
-		//Testes para parâmetros vazios
 		try {
-			c = new Contato("", "Heliane", "83991697808");
+			new Contato("", "Heliane", "83991697808");
 			fail(MSG_FAIL);
 		} catch(IllegalArgumentException e) {
 			assertEquals(ERROR_VAZIO, e.getMessage());
 		}
 		try {
-			c = new Contato("Vitoria", "", "83991697808");
+			new Contato("Vitoria", "", "83991697808");
 			fail(MSG_FAIL);
 		} catch(IllegalArgumentException e) {
 			assertEquals(ERROR_VAZIO, e.getMessage());
 		}
 		try {
-			c = new Contato("Vitoria", "Heliane", "");
+			new Contato("Vitoria", "Heliane", "");
 			fail(MSG_FAIL);
 		} catch(IllegalArgumentException e) {
 			assertEquals(ERROR_VAZIO, e.getMessage());
