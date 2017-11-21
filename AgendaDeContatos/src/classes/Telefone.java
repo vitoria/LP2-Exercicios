@@ -11,12 +11,35 @@ public class Telefone {
 	private String numero;
 	private String codigo;
 	private String tipo;
-	
-	public Telefone(String ddd, String numero, String codigo, String tipo) {
+	/**
+	 * Cria um novo objeto da classe Telefone a partir do ddd, numeor, codigo e tipo
+	 * @param ddd ddd do telefone
+	 * @param numero numero do telefone
+	 * @param codigo codigo do pais do telefone
+	 * @param tipo tipo do telefone
+	 */
+	public Telefone(String codigo, String ddd, String numero, String tipo) {
+		validarEntradas(numero, tipo);
 		this.ddd = ddd;
 		this.numero = numero;
 		this.codigo = codigo;
 		this.tipo = tipo;
+	}
+	/**
+	 * Verifica se o numero e tipo são diferentes de null e não vazios, se sim, uma exceção é lançada
+	 * @param numero numeor do telefone
+	 * @param tipo tipo do telefone
+	 */
+	private void validarEntradas(String numero, String tipo) {
+		if(numero == null || tipo == null)
+			throw new NullPointerException("Numero ou tipo de Telefone não podem ser nulo.");
+		if(numero.trim().equals("") || tipo.trim().equals("")) {
+			throw new IllegalArgumentException("Numero ou tipo de Telefone não pode ser vazio.");
+		}
+		tipo = tipo.toUpperCase();
+		if(!tipo.equals("CELULAR") && !tipo.equals("TRABALHO") && !tipo.equals("CASA")) {
+			throw new IllegalArgumentException("Tipo de Telefone precisa ser CELULAR, TRABALHO ou CASA.");
+		}
 	}
 
 	/**
@@ -74,5 +97,13 @@ public class Telefone {
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
-	
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return tipo + " : " + codigo + " " + ddd + " " + numero;
+	}
+
 }
