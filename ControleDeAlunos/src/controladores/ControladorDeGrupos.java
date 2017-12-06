@@ -66,4 +66,9 @@ public class ControladorDeGrupos {
 	private boolean existeGrupo(String nome) {
 		return mapaNomeGrupos.containsKey(nome.toLowerCase());
 	}
+	/**
+	 * Acessador da quantidade de grupos cadastrados
+	 * @return inteiro representando a quantidade de grupos
+	 */
+	public int getQtdGrupos() { return this.mapaNomeGrupos.size(); }
 }
