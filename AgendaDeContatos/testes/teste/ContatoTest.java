@@ -22,16 +22,16 @@ public class ContatoTest {
 	@Before
 	public void setUp() {
 		contato1 = new Contato("Vitoria", "Heliane", 1,
-								"+55", "83", "99169-7808", "CELULAR");
+				"+55", "83", "99169-7808", "CELULAR");
 		contato2 = new Contato("Matheus", "Sales", 5, 
-								"+55", "83", "3271-3032", "TRABALHO",
-								"+55", "83", "99322-2058", "CELULAR");
+				"+55", "83", "3271-3032", "TRABALHO",
+				"+55", "83", "99322-2058", "CELULAR");
 		contato3 = new Contato("Veronica", "Mainha", 5,
-								"+55", "21", "3271-3032", "TRABALHO",
-								"+55", "21", "99322-2058", "CELULAR",
-								"+55", "21", "11111-1111", "CASA");
+				"+55", "21", "3271-3032", "TRABALHO",
+				"+55", "21", "99322-2058", "CELULAR",
+				"+55", "21", "11111-1111", "CASA");
 	}
-	
+
 	@Test
 	public void testContato() {
 		assertEquals("Vitoria", contato1.getNome());
@@ -44,7 +44,7 @@ public class ContatoTest {
 		assertEquals("Mainha", contato3.getSobrenome());
 		assertEquals("- CELULAR : +55 21 99322-2058 - TRABALHO : +55 21 3271-3032 - CASA : +55 21 11111-1111 -", contato3.listarTelefones());
 	}
-	
+
 	@Test
 	public void testContatoComExcecoes() {
 		Contato c;

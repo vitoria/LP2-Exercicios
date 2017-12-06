@@ -1,7 +1,9 @@
-package classes;
+package menu;
 
-import java.util.ArrayList;
 import java.util.Scanner;
+
+import controladores.ControladorDeAlunos;
+import controladores.ControladorDeGrupos;
 import uteis.LeituraDeDados;
 
 public class Menu {
@@ -39,17 +41,30 @@ public class Menu {
 				break;
 			case ALOCAR_IMPRIMIR_GRUPOS:
 				char op = LeituraDeDados.leChar("(A)locar Aluno ou (I)mprimir Grupo? ", teclado);
-				if(op == 'A')
+				switch (op) {
+				case 'A':
+					alocarAlunos(cg, ca, teclado);
+					break;
+				case 'I':
+					imprimirGrupo(cg, teclado);
+					break;
+				default:
+					System.out.println("Opção inválida!");
+					break;
+				}
 				break;
 			case REGISTRAR_REPOSTA:
+				registarResposta(ca, teclado);
 				break;
 			case IMPRIMIR_RESPONDEDORES:
+				System.out.println(ca.listaAlunosRespondedores());
 				break;
 			case SAIR:
 				break;
 			default:
 				System.out.println("OPÇÃO INVÁLIDA!");
 			}
+			System.out.println();
 		} while(opc != SAIR);
 	}
 	
@@ -64,7 +79,11 @@ public class Menu {
 	
 	private static void consultaAluno(ControladorDeAlunos ca, Scanner teclado) {
 		String matricula = LeituraDeDados.leString("Matrícula: ", teclado);
-		System.out.println(ca.consultaAluno(matricula));
+		String consulta = ca.consultaAluno(matricula);
+		if(consulta != null)
+			System.out.println(consulta);
+		else
+			System.out.println("Aluno não cadastrado.");
 	}
 	
 	private static void criaGrupo(ControladorDeGrupos cg, Scanner teclado) {
@@ -74,7 +93,40 @@ public class Menu {
 		} else System.out.println("GRUPO JÁ CADASTRADO!");
 	}
 	
-	//private static void alocarAlunos()
+	private static void alocarAlunos(ControladorDeGrupos cg, ControladorDeAlunos ca, Scanner teclado) {
+		String matricula = LeituraDeDados.leString("Matricula: ", teclado);
+		String nome = LeituraDeDados.leString("Grupo: ", teclado);
+		int resultado = cg.alocaAluno(nome, matricula, ca);
+		switch (resultado) {
+		case 1:
+			System.out.println("Aluno alocado!");
+			break;
+		case 0:
+			System.out.println("Aluno não cadastrado!");
+			break;
+		case -1:
+			System.out.println("Grupo não cadastrado!");
+			break;
+		default:
+			System.out.println("Aluno não cadastrado!");
+			System.out.println("Grupo não cadastrado!");
+		}
+	}
 	
-	private static void imprimirGrupos
+	private static void imprimirGrupo(ControladorDeGrupos cg, Scanner teclado) {
+		String nome = LeituraDeDados.leString("Grupo: ", teclado);
+		String resultado = cg.listaGrupo(nome);
+		if(resultado != null)
+			System.out.println(resultado);
+		else System.out.println("Grupo não cadastrado!");
+	}
+	
+	private static void registarResposta(ControladorDeAlunos ca, Scanner teclado) {
+		String matricula = LeituraDeDados.leString("Matricula: ", teclado);
+		if(ca.CadastraAlunoResponde(matricula))
+			System.out.println("ALUNOS REGISTRADO!");
+		else 
+			System.out.println("ALUNOS NÃO CADASTRADO!");
+	}
+
 }
