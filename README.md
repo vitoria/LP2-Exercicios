@@ -1,6 +1,6 @@
 # Laboratório de Programação II - Exercícios
 
-Este repositório contém todos os projetos criados na disciplina de Laboratório de Programação II do Curso Ciência da Computação na Universidade Federal da Paraíba
+Este repositório contém todos os projetos criados na disciplina de Laboratório de Programação II do Curso Ciência da Computação na Universidade Federal de Campina Grande - UFCG
 
 ## Colaboradores
 
