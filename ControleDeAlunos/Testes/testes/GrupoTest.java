@@ -14,7 +14,7 @@ import classes.Grupo;
  */
 class GrupoTest {
 	private static final String ERROR_NULL = "Nome do grupo não pode ser nulo.";
-	private static final String ERROR_VAZIO = "Nome do grupo não pode ser vazio.";
+	private static final String ERROR_EMPTY = "Nome do grupo não pode ser vazio.";
 	private static final String FAIL = "Deveria ter lançado uma exceção.";
 	private Grupo grupo;
 	
@@ -44,7 +44,7 @@ class GrupoTest {
 			g = new Grupo("    ");
 			fail(FAIL);
 		} catch (IllegalArgumentException e) {
-			assertEquals(ERROR_VAZIO, e.getMessage());
+			assertEquals(ERROR_EMPTY, e.getMessage());
 		}
 		g = new Grupo("Embedded");
 		assertEquals("Embedded", g.getNome());
