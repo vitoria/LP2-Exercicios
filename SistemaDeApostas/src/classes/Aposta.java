@@ -3,9 +3,9 @@ package classes;
 public class Aposta {
 	private String nome;
 	private double valor;
-	private boolean previsao;
+	private String previsao;
 	
-	public Aposta(String nome, double valor, boolean previsao) {
+	public Aposta(String nome, double valor, String previsao) {
 		this.nome = nome;
 		this.valor = valor;
 		this.previsao = previsao;
@@ -27,15 +27,15 @@ public class Aposta {
 		this.valor = valor;
 	}
 
-	public boolean getPrevisao() {
+	public String getPrevisao() {
 		return previsao;
 	}
 
-	public void setPrevisao(boolean previsao) {
+	public void setPrevisao(String previsao) {
 		this.previsao = previsao;
 	}
 		
 	public String toString() {
-		return this.getNome() + " - R$" + this.getValor()/100 + " - " + ((this.getPrevisao()) ? "VAI ACONTECER" : "N VAI ACONTECER");  
+		return this.getNome() + " - R$" + this.getValor()/100 + " - " + this.getPrevisao();  
 	}
 }

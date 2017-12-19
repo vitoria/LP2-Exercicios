@@ -6,10 +6,6 @@ import easyaccept.EasyAccept;
 
 public class Fachada {
 	private Sistema sistema;
-	
-	public Fachada() {
-
-	}
 
     public static void main(String[] args) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
         ArrayList<String> testes = new ArrayList<>();
@@ -32,39 +28,39 @@ public class Fachada {
 	} 
 	
 	public String exibirCenario(int cenario) {
-		return null;
+		return this.sistema.exibeCenario(cenario);
 	}
 	
 	public String exibirCenarios() {
-		return null;
+		return this.sistema.exibeCenarios();
 	}
 	
 	public void cadastrarAposta(int cenario, String apostador, int valor, String previsao) {
-		
+		this.sistema.cadastraAposta(cenario, apostador, valor, previsao);
 	}
 	
 	public int valorTotalDeApostas(int cenario) {
-		return 0;
+		return this.sistema.valorTotalApostas(cenario);
 	}
 	
 	public int totalDeApostas(int cenario) {
-		return 0;
+		return this.sistema.totalApostas(cenario);
 	}
 	
 	public String exibeApostas(int cenario) {
-		return null;
+		return this.sistema.exibeApostas(cenario);
 	}
 	
 	public void fecharAposta(int cenario, boolean ocorreu) {
-		
+		this.sistema.fechaCenario(cenario, ocorreu);
 	}
 	
 	public int getCaixaCenario(int cenario) {
-		return 0;
+		return this.sistema.getCaixaCenario(cenario);
 	}
 	
 	public int getTotalRateioCenario(int cenario) {
-		return 0;
+		return this.sistema.getTotalRasteioCenario(cenario);
 	}
 	
 	
