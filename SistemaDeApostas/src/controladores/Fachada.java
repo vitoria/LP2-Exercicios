@@ -11,6 +11,8 @@ public class Fachada {
         ArrayList<String> testes = new ArrayList<>();
         testes.add("testes_de_aceitacao/us1_test.txt");
         testes.add("testes_de_aceitacao/us2_test.txt");
+        testes.add("testes_de_aceitacao/us3_test.txt");
+        testes.add("testes_de_aceitacao/us4_test.txt");
 
         EasyAccept.executeEasyAcceptTests("controladores.Fachada", testes);
     }

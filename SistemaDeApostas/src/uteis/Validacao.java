@@ -18,9 +18,12 @@ public class Validacao {
 	 * @param str A string a ser validada como não-vazia e não-nula.
 	 * 
 	 */
-	public static void validarNotEmptyNotNull(String msg, String str) {
-		if (str == null) throw new NullPointerException(msg); 
+	public static void validarNaoVazio(String msg, String str) { 
 		if (str.trim().equals("")) throw new IllegalArgumentException(msg); 
+	}
+	
+	public static void validarNaoNulo(String msg, Object obj) { 
+		if (obj == null) throw new NullPointerException(msg); 
 	}
 	
 	/**
@@ -42,7 +45,6 @@ public class Validacao {
 	 * 
 	 */
 	public static void validaInteiroNaoNegativo(String msg, int valor) {
-		System.out.println("ESSE AÍ Ó --------------------------------------------->>> " + valor);
 		if (valor < 0) throw new IllegalArgumentException(msg); 
 	}
 	

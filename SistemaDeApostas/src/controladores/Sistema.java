@@ -1,10 +1,6 @@
 package controladores;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-
-import classes.Aposta;
 import classes.Cenario;
 import uteis.Validacao;
 
@@ -26,15 +22,24 @@ public class Sistema {
 	}
 	
 	public int criaCenario(String descricao) {
-		Cenario cenario = new Cenario(descricao);
-		listaCenarios.add(cenario);
-		return cenario.getId();
+		try {
+			verificaStringNaoVazio(descricao);
+			Cenario cenario = new Cenario(listaCenarios.size() + 1, descricao);
+			listaCenarios.add(cenario);
+			return listaCenarios.size();
+		} catch(IllegalArgumentException e) {
+			throw new IllegalArgumentException("Erro no cadastro de cenario: " + e.getMessage());
+		}
 	}
 	
 	public String exibeCenario(int idCenario) {
-		Cenario c = listaCenarios.get(idCenario - 1);
-		if(c == null) throw new NullPointerException("Cenário não cadastrado.");
-		return c.toString();
+		try {
+			verificaCenarioInvalido(idCenario);
+			Cenario c = listaCenarios.get(idCenario - 1);
+			return c.toString();
+		} catch(IllegalArgumentException e) {
+			throw new IllegalArgumentException("Erro na consulta de cenario: " + e.getMessage());
+		}
 	}
 	
 	public String exibeCenarios() {
@@ -46,8 +51,12 @@ public class Sistema {
 	}
 	
 	public void cadastraAposta(int idCenario, String nomeApostador, int valorAposta, String previsao) {
-		if(listaCenarios.get(idCenario - 1) == null) throw new IllegalArgumentException("Não há cenário cadastrado com esse Id");
-		listaCenarios.get(idCenario - 1).cadastraAposta(nomeApostador, valorAposta, previsao);
+		try {
+			verificaCenarioInvalido(idCenario);
+			listaCenarios.get(idCenario - 1).cadastraAposta(nomeApostador, valorAposta, previsao);
+		} catch(IllegalArgumentException e) {
+			throw new IllegalArgumentException("Erro no cadastro de aposta: " + e.getMessage());
+		}
 	}
 	
 	public int valorTotalApostas(int idCenario) {
@@ -85,5 +94,14 @@ public class Sistema {
 		if(c == null) throw new NullPointerException("Cenario não cadastrado");
 		int total = listaCenarios.get(idCenario - 1).somaValorApostasPerdedoras();
 		return total - (int) Math.floor(total * taxaRetirada);
+	}
+	
+	private void verificaCenarioInvalido(int idCenario) {
+		if(idCenario < 1) throw new IllegalArgumentException("Cenario invalido");
+		if(idCenario > listaCenarios.size()) throw new IllegalArgumentException("Cenario nao cadastrado");
+	}
+	
+	private void verificaStringNaoVazio(String str) {
+		if(str.trim().equals("")) throw new IllegalArgumentException("Descricao nao pode ser vazia");
 	}
 }

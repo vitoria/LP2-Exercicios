@@ -3,22 +3,22 @@ package classes;
 import java.util.ArrayList;
 
 public class Cenario {
-	private static int id;
 	private String descricao;
 	private EstadoCenario estado;
 	private ArrayList<Aposta> listaApostas;
+	private int id;
 	
-	public Cenario(String descricao) {
-		this.id++;
+	public Cenario(int id, String descricao) {
+		this.id = id;
 		this.descricao = descricao;
 		estado = EstadoCenario.NAO_FINALIZADO;
 		listaApostas = new ArrayList<>();
 	}
-	
-	public int getId() {
-		return id;
-	}
 
+	public int getId() {
+		return this.id;
+	}
+	
 	public String getDescricao() {
 		return descricao;
 	}

@@ -3,7 +3,7 @@ package classes;
 public enum EstadoCenario {
 	FINALIZADO_OCORREU("Finalizado (ocorreu)"),
 	FINALIZADO_NAO_OCORREU("Finalizado (n ocorreu)"),
-	NAO_FINALIZADO("Finalizado");
+	NAO_FINALIZADO("Nao finalizado");
 	
 	private String nome;
 	
