@@ -10,7 +10,7 @@ package uteis;
  *
  */
 public class Validacao {
-	
+
 	/**
 	 * Verifica se uma String é vazia ou nula.
 	 * 
@@ -18,14 +18,14 @@ public class Validacao {
 	 * @param str A string a ser validada como não-vazia e não-nula.
 	 * 
 	 */
-	public static void validarNaoVazio(String msg, String str) { 
+	public static void verificaStringVazia(String msg, String str) { 
 		if (str.trim().equals("")) throw new IllegalArgumentException(msg); 
 	}
-	
+
 	public static void validarNaoNulo(String msg, Object obj) { 
 		if (obj == null) throw new NullPointerException(msg); 
 	}
-	
+
 	/**
 	 * Avalia se um int é positivo.
 	 * 
@@ -36,7 +36,7 @@ public class Validacao {
 	public static void validaInteiroPositivo(String msg, int valor) {
 		if (valor < 1) throw new IllegalArgumentException(msg); 
 	}
-	
+
 	/**
 	 * Avalia se um int é não-negativo.
 	 * 
@@ -47,7 +47,7 @@ public class Validacao {
 	public static void validaInteiroNaoNegativo(String msg, int valor) {
 		if (valor < 0) throw new IllegalArgumentException(msg); 
 	}
-	
+
 	/**
 	 * Avalia se um double é não-negativo.
 	 * 
@@ -62,7 +62,7 @@ public class Validacao {
 			throw new IllegalArgumentException(msg); 
 		}
 	}
-	
+
 	/**
 	 * Avalia se um inteiro é menor ou igual a outro int.
 	 * 
@@ -78,7 +78,7 @@ public class Validacao {
 			throw new IllegalArgumentException(msg); 
 		}
 	}
-	
+
 	/**
 	 * Avalia se um double é uma representação válida para um percentual.
 	 * 
@@ -93,5 +93,5 @@ public class Validacao {
 			throw new IllegalArgumentException(msg); 
 		}
 	}
-	
+
 }
