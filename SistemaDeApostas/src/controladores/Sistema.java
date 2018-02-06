@@ -121,6 +121,54 @@ public class Sistema {
 			throw new NullPointerException("Erro no cadastro de aposta: " + e.getMessage());
 		} 
 	}
+	
+	/**
+	 * Metodo que adiciona uma nova aposta assegurada por valor em um determinado cenário, caso ele exista
+	 * 
+	 * @param idCenario - identificador do cenario
+	 * @param nomeApostador - nome do apostador
+	 * @param valorAposta - valor apostado no cenário
+	 * @param previsao - resultado esperado da aposta
+	 */
+	
+	public void cadastraAposta(int idCenario, String nomeApostador, int valorAposta, String previsao, int valorSeguro, int custoSeguro) {
+		try {
+			verificaCenarioInvalido(idCenario);
+			listaCenarios.get(idCenario - 1).cadastraAposta(nomeApostador, valorAposta, previsao, valorSeguro, custoSeguro);
+		} catch(IllegalArgumentException e) {
+			throw new IllegalArgumentException("Erro no cadastro de aposta: " + e.getMessage());
+		} catch(NullPointerException e) {
+			throw new NullPointerException("Erro no cadastro de aposta: " + e.getMessage());
+		} 
+	}
+	
+	/**
+	 * Metodo que adiciona uma nova aposta assegurada por taxa em um determinado cenário, caso ele exista
+	 * 
+	 * @param idCenario - identificador do cenario
+	 * @param nomeApostador - nome do apostador
+	 * @param valorAposta - valor apostado no cenário
+	 * @param previsao - resultado esperado da aposta
+	 */
+	
+	public void cadastraAposta(int idCenario, String nomeApostador, int valorAposta, String previsao, double taxaSeguro, int custoSeguro) {
+		try {
+			verificaCenarioInvalido(idCenario);
+			listaCenarios.get(idCenario - 1).cadastraAposta(nomeApostador, valorAposta, previsao, taxaSeguro, custoSeguro);
+		} catch(IllegalArgumentException e) {
+			throw new IllegalArgumentException("Erro no cadastro de aposta: " + e.getMessage());
+		} catch(NullPointerException e) {
+			throw new NullPointerException("Erro no cadastro de aposta: " + e.getMessage());
+		} 
+	}
+	
+	public void alteraSeguroValor(int idCenario, int id, int valor) {
+		listaCenarios.get(idCenario - 1).alteraSeguroValor(id, valor);
+	}
+	
+	public void alteraSeguroTaxa(int idCenario, int id, double taxa) {
+		listaCenarios.get(idCenario - 1).alteraSeguroTaxa(id, taxa);
+	}
 
 	/**
 	 * Acessador do somatório do valor de todas as apostas cadastradas em um cenário, caso ele exista

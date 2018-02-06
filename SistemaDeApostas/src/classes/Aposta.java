@@ -9,7 +9,7 @@ package classes;
  */
 public class Aposta {
 	private String nome;
-	private double valor;
+	private int valor;
 	private String previsao;
 
 	/**
@@ -19,7 +19,7 @@ public class Aposta {
 	 * @param valor - valor apostado em centavos
 	 * @param previsao - previsao do que ira acontecer
 	 */
-	public Aposta(String nome, double valor, String previsao) {
+	public Aposta(String nome, int valor, String previsao) {
 		verificaParametros(nome, valor, previsao);
 		this.nome = nome;
 		this.valor = valor;
@@ -58,7 +58,7 @@ public class Aposta {
 	 * 
 	 * @return double representando o valor apostado
 	 */
-	public double getValor() {
+	public int getValor() {
 		return valor;
 	}
 

@@ -41,6 +41,22 @@ public class Fachada {
 		this.sistema.cadastraAposta(cenario, apostador, valor, previsao);
 	}
 	
+	public void cadastrarApostaSeguraValor(int cenario, String apostador, int valor, String previsao, int valorSeguro, int custoSeguro) {
+		this.sistema.cadastraAposta(cenario, apostador, valor, previsao, valorSeguro, custoSeguro);
+	}
+	
+	public void cadastrarApostaSeguraTaxa(int cenario, String apostador, int valor, String previsao, double taxaSeguro, int custoSeguro) {
+		this.sistema.cadastraAposta(cenario, apostador, valor, previsao, taxaSeguro, custoSeguro);
+	}
+	
+	public void alterarSeguroValor(int cenario, int apostaAssegurada, int valor) {
+		this.sistema.alteraSeguroValor(cenario, apostaAssegurada, valor);
+	}
+	
+	public void alterarSeguroTaxa(int cenario, int apostaAssegurada, double taxa) {
+		this.sistema.alteraSeguroTaxa(cenario, apostaAssegurada, taxa);
+	}
+	
 	public int valorTotalDeApostas(int cenario) {
 		return this.sistema.valorTotalApostas(cenario);
 	}
@@ -64,6 +80,5 @@ public class Fachada {
 	public int getTotalRateioCenario(int cenario) {
 		return this.sistema.getTotalRasteioCenario(cenario);
 	}
-	
 	
 }

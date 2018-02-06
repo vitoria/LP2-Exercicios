@@ -1,13 +1,13 @@
 package testes_de_unidade;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 import controladores.Sistema;
 
-class SistemaTest {
+public class SistemaTest {
 	private static final String ERRO_INICIALIZA_CAIXA_NEGATIVO = "Erro na inicializacao: Caixa nao pode ser inferior a 0";
 	private static final String ERRO_INICIALIZA_TAXA_NEGATIVA = "Erro na inicializacao: Taxa nao pode ser inferior a 0";
 	private static final String ERRO_CRIA_CENARIO = "Erro no cadastro de cenario: Descricao nao pode ser vazia";
@@ -16,13 +16,13 @@ class SistemaTest {
 	private static final String MSG_FAIL = "Deveria ter lançado uma exceção";
 	private Sistema sistema;
 	
-	@BeforeEach
-	void setUp() {
+	@Before
+	public void setUp() {
 		sistema = new Sistema(100, 0.1);
 	}
 
 	@Test
-	void testSistema() {
+	public void testSistema() {
 		Sistema s;
 		try {
 			s = new Sistema(-100, 0.1);
@@ -38,11 +38,11 @@ class SistemaTest {
 		}
 		s = new Sistema(100, 0.1);
 		assertEquals(100, s.getValorCaixa());
-		assertEquals(0.1, s.getTaxaRetirada());
+		assertEquals(0.1, s.getTaxaRetirada(), 0.0000001);
 	}
 
 	@Test
-	void testCriaCenario() {
+	public void testCriaCenario() {
 		try {
 			sistema.criaCenario("");
 			fail(MSG_FAIL);
@@ -54,7 +54,7 @@ class SistemaTest {
 	}
 
 	@Test
-	void testExibeCenario() {
+	public void testExibeCenario() {
 		try {
 			sistema.exibeCenario(0);
 			fail(MSG_FAIL);
@@ -72,7 +72,7 @@ class SistemaTest {
 	}
 
 	@Test
-	void testExibeCenarios() {
+	public void testExibeCenarios() {
 		assertEquals("", sistema.exibeCenarios());
 		sistema.criaCenario("Bla");
 		sistema.criaCenario("Ta-da");
@@ -80,7 +80,7 @@ class SistemaTest {
 	}
 
 	@Test
-	void testCadastraAposta() {
+	public void testCadastraAposta() {
 		sistema.criaCenario("Bla");
 		try {
 			sistema.cadastraAposta(0, "Vitoria", 100, "VAI ACONTECER");
@@ -100,7 +100,7 @@ class SistemaTest {
 	}
 
 	@Test
-	void testValorTotalApostas() {
+	public void testValorTotalApostas() {
 		sistema.criaCenario("Bla");
 		try {
 			sistema.valorTotalApostas(2);
@@ -122,7 +122,7 @@ class SistemaTest {
 	}
 
 	@Test
-	void testExibeApostas() {
+	public void testExibeApostas() {
 		sistema.criaCenario("Bla");
 		assertEquals("", sistema.exibeApostas(1));
 		sistema.cadastraAposta(1, "V", 100, "VAI ACONTECER");
@@ -131,18 +131,18 @@ class SistemaTest {
 	}
 
 	@Test
-	void testFechaCenario() {
+	public void testFechaCenario() {
 		sistema.criaCenario("Bla");
 		
 	}
 
 	@Test
-	void testGetCaixaCenario() {
+	public void testGetCaixaCenario() {
 		//fail("Not yet implemented");
 	}
 
 	@Test
-	void testGetTotalRasteioCenario() {
+	public void testGetTotalRasteioCenario() {
 		//fail("Not yet implemented");
 	}
 

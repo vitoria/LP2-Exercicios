@@ -91,7 +91,57 @@ public class Cenario {
 		Aposta aposta = new Aposta(nomeApostador, valorAposta, previsao);
 		listaApostas.add(aposta);
 	}
+	
+	/**
+	 * Cria uma nova aposta assegurada por valor de acordo com os parametros recebidos e adiciona na lsita de apostas
+	 * 
+	 * @param nomeApostador - nome do apostador
+	 * @param valorAposta - valor apostado (em cnetavos)
+	 * @param previsao - previsao (vai acontecer ou nao)
+	 * @param valorSeguro - valor do seguro da aposta
+	 * @param custoSeguro - custo do seguro da aposta
+	 */
+	
+	public void cadastraAposta(String nomeApostador, int valorAposta, String previsao, int valorSeguro, int custoSeguro) {
+		verificaCenarioFechado();
+		Aposta aposta = new ApostaAsseguradaValor(nomeApostador, valorAposta, previsao, valorSeguro, custoSeguro);
+		listaApostas.add(aposta);
+	}
+	
+	/**
+	 * Cria uma nova aposta assegurada por taxa de acordo com os parametros recebidos e adiciona na lsita de apostas
+	 * 
+	 * @param nomeApostador - nome do apostador
+	 * @param valorAposta - valor apostado (em cnetavos)
+	 * @param previsao - previsao (vai acontecer ou nao)
+	 * @param taxaSeguro - valor da taxa do seguro da aposta
+	 * @param custoSeguro - custo do seguro da aposta
+	 */
+	
+	public void cadastraAposta(String nomeApostador, int valorAposta, String previsao, double taxaSeguro, int custoSeguro) {
+		verificaCenarioFechado();
+		Aposta aposta = new ApostaAsseguradaTaxa(nomeApostador, valorAposta, previsao, taxaSeguro, custoSeguro);
+		listaApostas.add(aposta);
+	}
 
+	public void alteraSeguroValor(int idAposta, int valor) {
+		verificaCenarioFechado();
+		verificaIdApostaValido(idAposta);
+		Aposta aposta = listaApostas.get(idAposta - 1);
+		if(aposta instanceof ApostaAsseguradaValor) {
+			((ApostaAsseguradaValor) aposta).setValorSeguro(valor);
+		}
+	}
+	
+	public void alteraSeguroTaxa(int idAposta, double taxa) {
+		verificaCenarioFechado();
+		verificaIdApostaValido(idAposta);
+		Aposta aposta = listaApostas.get(idAposta - 1);
+		if(aposta instanceof ApostaAsseguradaTaxa) {
+			((ApostaAsseguradaTaxa) aposta).setTaxaSeguro(taxa);
+		}
+	}
+	
 	/**
 	 * Calcula o somatorio do valor de todas apostas do cenario
 	 * 
@@ -165,5 +215,9 @@ public class Cenario {
 	private void verificaCenarioFechado() {
 		if(!estado.getNome().equals("Nao finalizado"))
 			throw new UnsupportedOperationException("Cenario ja esta fechado");
+	}
+	
+	private void verificaIdApostaValido(int id) {
+		if(id < 1 && id > listaApostas.size()) throw new IllegalArgumentException("Id invalido");
 	}
 }

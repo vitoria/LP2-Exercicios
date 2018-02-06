@@ -1,24 +1,26 @@
 package testes_de_unidade;
 
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.junit.Assert.*;
+
+import org.junit.Before;
+import org.junit.Test;
+
 import classes.Cenario;
 
-class CenarioTest {
+public class CenarioTest {
 	private static final String ERRO_DESCRICAO = "Descricao nao pode ser vazia";
 	private static final String ERRO_FECHADO = "Cenario ja esta fechado";
 	private static final String ERRO_ABERTO = "Cenario ainda esta aberto";
 	private static final String MSG_FAIL = "Deveria ter lançado exceção";
 	private Cenario cenario;
 
-	@BeforeEach
-	void setUp() {
+	@Before
+	public void setUp() {
 		cenario  = new Cenario(1, "Vitoria tirar 10 neste lab");
 	}
 
 	@Test
-	void testCenario() {
+	public void testCenario() {
 		Cenario c;
 		try {
 			c = new Cenario(0, "");
@@ -33,7 +35,7 @@ class CenarioTest {
 	}
 
 	@Test
-	void testFinalizaCenario() {
+	public void testFinalizaCenario() {
 		cenario.finalizaCenario(false);
 		assertEquals("Finalizado (n ocorreu)", cenario.getEstado());
 		try {
@@ -46,7 +48,7 @@ class CenarioTest {
 	}
 
 	@Test
-	void testCadastraAposta() {
+	public void testCadastraAposta() {
 		cenario.cadastraAposta("Vitoria", 100, "VAI ACONTECER");
 		assertEquals(1, cenario.getTotalApostas());
 		cenario.cadastraAposta("Vitoria", 100, "VAI ACONTECER");
@@ -65,14 +67,14 @@ class CenarioTest {
 	}
 
 	@Test
-	void testTotalValorApostas() {
+	public void testTotalValorApostas() {
 		assertEquals(0, cenario.totalValorApostas());
 		cadastraApostas();
 		assertEquals(600, cenario.totalValorApostas());
 	}
 
 	@Test
-	void testListaApostas() {
+	public void testListaApostas() {
 		assertEquals("", cenario.listaApostas());
 		cadastraApostas();
 		assertEquals("Vitoria - R$1.0 - VAI ACONTECER\n"
@@ -82,7 +84,7 @@ class CenarioTest {
 	}
 
 	@Test
-	void testSomaValorApostasPerdedoras() {
+	public void testSomaValorApostasPerdedoras() {
 		cadastraApostas();
 		try {
 			cenario.somaValorApostasPerdedoras();
@@ -94,7 +96,7 @@ class CenarioTest {
 	}
 
 	@Test
-	void testToString() {
+	public void testToString() {
 		assertEquals("1 - Vitoria tirar 10 neste lab - Nao finalizado", cenario.toString());
 		cenario.finalizaCenario(false);
 		assertEquals("1 - Vitoria tirar 10 neste lab - Finalizado (n ocorreu)", cenario.toString());
