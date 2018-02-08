@@ -12,6 +12,7 @@ public class Aposta {
 	private int valor;
 	private String previsao;
 
+
 	/**
 	 * Cria uma nova aposta a partir do nome, valor e previsao recebidos
 	 * 

@@ -104,7 +104,7 @@ public class Cenario {
 	
 	public void cadastraAposta(String nomeApostador, int valorAposta, String previsao, int valorSeguro, int custoSeguro) {
 		verificaCenarioFechado();
-		Aposta aposta = new ApostaAsseguradaValor(nomeApostador, valorAposta, previsao, valorSeguro, custoSeguro);
+		Aposta aposta = new ApostaAssegurada(nomeApostador, valorAposta, previsao, custoSeguro, valorSeguro);
 		listaApostas.add(aposta);
 	}
 	
@@ -120,7 +120,7 @@ public class Cenario {
 	
 	public void cadastraAposta(String nomeApostador, int valorAposta, String previsao, double taxaSeguro, int custoSeguro) {
 		verificaCenarioFechado();
-		Aposta aposta = new ApostaAsseguradaTaxa(nomeApostador, valorAposta, previsao, taxaSeguro, custoSeguro);
+		Aposta aposta = new ApostaAssegurada(nomeApostador, valorAposta, previsao, custoSeguro, taxaSeguro);
 		listaApostas.add(aposta);
 	}
 
@@ -128,8 +128,8 @@ public class Cenario {
 		verificaCenarioFechado();
 		verificaIdApostaValido(idAposta);
 		Aposta aposta = listaApostas.get(idAposta - 1);
-		if(aposta instanceof ApostaAsseguradaValor) {
-			((ApostaAsseguradaValor) aposta).setValorSeguro(valor);
+		if(aposta instanceof ApostaAssegurada) {
+			((ApostaAssegurada) aposta).alteraSeguro(valor);
 		}
 	}
 	
@@ -137,8 +137,8 @@ public class Cenario {
 		verificaCenarioFechado();
 		verificaIdApostaValido(idAposta);
 		Aposta aposta = listaApostas.get(idAposta - 1);
-		if(aposta instanceof ApostaAsseguradaTaxa) {
-			((ApostaAsseguradaTaxa) aposta).setTaxaSeguro(taxa);
+		if(aposta instanceof ApostaAssegurada) {
+			((ApostaAssegurada) aposta).alteraSeguro(taxa);
 		}
 	}
 	
