@@ -58,9 +58,7 @@ public class Validacao {
 	 * 
 	 */
 	public static void validarNotNegativeDouble(String msg, double value) {
-		if (value < 0) {
-			throw new IllegalArgumentException(msg); 
-		}
+		if (value < 0) throw new IllegalArgumentException(msg); 
 	}
 
 	/**

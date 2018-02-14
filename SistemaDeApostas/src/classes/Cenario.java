@@ -12,12 +12,12 @@ import uteis.Validacao;
  * @author Vitoria Heliane
  *
  */
-
 public class Cenario {
+	
+	private int id;
 	private String descricao;
 	private EstadoCenario estado;
 	private ArrayList<Aposta> listaApostas;
-	private int id;
 
 	/**
 	 * Cria um novo cenario inicializando
@@ -27,7 +27,6 @@ public class Cenario {
 	 * @param id - identificador do cenario
 	 * @param descricao - descricao do cenario
 	 */
-	
 	public Cenario(int id, String descricao) {
 		Validacao.verificaStringVazia("Descricao nao pode ser vazia", descricao);
 		this.id = id;
@@ -41,7 +40,6 @@ public class Cenario {
 	 * 
 	 * @return inteiro que representa o id do cenario
 	 */
-	
 	public int getId() {
 		return this.id;
 	}
@@ -86,10 +84,11 @@ public class Cenario {
 	 * @param previsao - previsao (vai acontecer ou nao)
 	 */
 	
-	public void cadastraAposta(String nomeApostador, int valorAposta, String previsao) {
+	public int cadastraAposta(String nomeApostador, int valorAposta, String previsao) {
 		verificaCenarioFechado();
 		Aposta aposta = new Aposta(nomeApostador, valorAposta, previsao);
 		listaApostas.add(aposta);
+		return listaApostas.size();
 	}
 	
 	/**
@@ -102,10 +101,11 @@ public class Cenario {
 	 * @param custoSeguro - custo do seguro da aposta
 	 */
 	
-	public void cadastraAposta(String nomeApostador, int valorAposta, String previsao, int valorSeguro, int custoSeguro) {
+	public int cadastraAposta(String nomeApostador, int valorAposta, String previsao, int valorSeguro, int custoSeguro) {
 		verificaCenarioFechado();
-		Aposta aposta = new ApostaAssegurada(nomeApostador, valorAposta, previsao, custoSeguro, valorSeguro);
+		Aposta aposta = new ApostaAssegurada(nomeApostador, valorAposta, previsao, valorSeguro);
 		listaApostas.add(aposta);
+		return listaApostas.size();
 	}
 	
 	/**
@@ -118,28 +118,51 @@ public class Cenario {
 	 * @param custoSeguro - custo do seguro da aposta
 	 */
 	
-	public void cadastraAposta(String nomeApostador, int valorAposta, String previsao, double taxaSeguro, int custoSeguro) {
+	public int cadastraAposta(String nomeApostador, int valorAposta, String previsao, double taxaSeguro, int custoSeguro) {
 		verificaCenarioFechado();
-		Aposta aposta = new ApostaAssegurada(nomeApostador, valorAposta, previsao, custoSeguro, taxaSeguro);
+		Aposta aposta = new ApostaAssegurada(nomeApostador, valorAposta, previsao, taxaSeguro);
 		listaApostas.add(aposta);
+		return listaApostas.size();
 	}
 
-	public void alteraSeguroValor(int idAposta, int valor) {
+	/**
+	 * Altera o seguro da aposta para um seguro por valor de acordo com o valor recebido
+	 * caso a aposta seja do tipo assegurada
+	 * @param idAposta id da aposta
+	 * @param valor valor do novo seguro
+	 * @return id da aposta
+	 */
+	public int alteraSeguroValor(int idAposta, int valor) {
 		verificaCenarioFechado();
-		verificaIdApostaValido(idAposta);
+		verificaIdApostaValida(idAposta);
+		
 		Aposta aposta = listaApostas.get(idAposta - 1);
-		if(aposta instanceof ApostaAssegurada) {
-			((ApostaAssegurada) aposta).alteraSeguro(valor);
-		}
+		
+		verificaApostaAssegurada(aposta);
+		
+		((ApostaAssegurada) aposta).alteraSeguro(valor);
+		
+		return idAposta;
 	}
 	
-	public void alteraSeguroTaxa(int idAposta, double taxa) {
+	/**
+	 * Altera o seguro da aposta para um seguro por taxa de acordo com a taxa recebida
+	 * caso a aposta seja do tipo assegurada
+	 * @param idAposta id da aposta
+	 * @param taxa taxa do novo seguro
+	 * @return id da aposta
+	 */
+	public int alteraSeguroTaxa(int idAposta, double taxa) {
 		verificaCenarioFechado();
-		verificaIdApostaValido(idAposta);
+		verificaIdApostaValida(idAposta);
+		
 		Aposta aposta = listaApostas.get(idAposta - 1);
-		if(aposta instanceof ApostaAssegurada) {
-			((ApostaAssegurada) aposta).alteraSeguro(taxa);
-		}
+		
+		verificaApostaAssegurada(aposta);
+		
+		((ApostaAssegurada) aposta).alteraSeguro(taxa);
+		
+		return idAposta;
 	}
 	
 	/**
@@ -148,11 +171,9 @@ public class Cenario {
 	 * @return inteiro representando o somatorio
 	 */
 	
-	public int totalValorApostas() {
+	public int valorTotalDasApostas() {
 		int total = 0;
-		for(Aposta a : listaApostas) {
-			total += a.getValor();
-		}
+		for(Aposta a : listaApostas) total += a.getValor();
 		return total;
 	}
 
@@ -171,11 +192,9 @@ public class Cenario {
 	 */
 	
 	public String listaApostas() {
-		String apostas = "";
-		for(Aposta a : listaApostas) {
-			apostas += a.toString() + "\n";
-		}
-		return apostas;
+		String listagemDasApostas = "";
+		for(Aposta aposta : listaApostas) listagemDasApostas += aposta.toString() + "\n";
+		return listagemDasApostas;
 	}
 
 	/**
@@ -185,15 +204,69 @@ public class Cenario {
 	 * @return inteiro que representa o somatorio
 	 */
 	
-	public int somaValorApostasPerdedoras() {
+	public int valorTotalDasApostasPerdedoras() {
 		verificaCenarioAberto();
 		int total = 0;
+		
 		for(Aposta a : listaApostas) {
 			if(a.getPrevisao().equals("VAI ACONTECER") && estado.getNome().equals("Finalizado (n ocorreu)") ||
 					a.getPrevisao().equals("N VAI ACONTECER") && estado.getNome().equals("Finalizado (ocorreu)"))
 				total += a.getValor();
 		}
 		return total;
+	}
+	
+	public int calculaLucro(double taxa) {
+		return (int) Math.floor(valorTotalDasApostasPerdedoras() * taxa);
+	}
+	
+	/**
+	 * Retorna o valor (em centavos) que será destinado ao rateio entre os vencedores do Cenario.  
+	 * 
+	 * @param taxa A taxa de lucro informada pelo Sistema que contém o Cenario.
+	 * 
+	 * @returns O valor (em centavos) que será destinado ao rateio entre os vencedores.
+	 * 
+	 */
+	public int rateioCenario(double taxa) {
+		return valorTotalDasApostasPerdedoras() - calculaLucro(taxa);
+	}
+	
+	/**
+	 * Retorna o valor (em centavos) correspondente ao lucro gerado a partir das Apostas perdedoras
+	 * registradas no Cenario.  
+	 * 
+	 * @param taxa A taxa de lucro informada pelo Sistema que contém o Cenario.
+	 * 
+	 * @returns O valor (em centavos) de lucro gerado pelo Cenario.
+	 * 
+	 */
+	public int lucroCenario(double taxa) {
+		return (int) Math.floor(valorTotalDasApostasPerdedoras() * taxa);
+	}
+	
+	/**
+	 * Retorna o custo total gerado pelo pagamento dos Seguros das ApostasAsseguradas perdedoras ca-
+	 * dastradas no Cenario. Caso esse método seja executado por um Cenario ainda aberto, uma exce-
+	 * ção adequada é lançada.
+	 * 
+	 * @returns O valor total (em centavos) que será pago devido aos Seguros no Cenario.
+	 * 
+	 */
+	public int pagamentoSeguros() {
+		if (this.estado.equals(EstadoCenario.NAO_FINALIZADO)) {
+			throw new IllegalArgumentException("Cenario ainda esta aberto");
+		}
+		
+		int perdas = 0;
+		for (Aposta aposta : listaApostas) {
+			if (aposta.getPrevisao().equals(estado.getNome())) {
+					perdas += aposta.getValor();
+			}
+		}
+		
+		return valorTotalDasApostasPerdedoras() - perdas;
+		
 	}
 	
 	/**
@@ -217,7 +290,12 @@ public class Cenario {
 			throw new UnsupportedOperationException("Cenario ja esta fechado");
 	}
 	
-	private void verificaIdApostaValido(int id) {
+	private void verificaIdApostaValida(int id) {
 		if(id < 1 && id > listaApostas.size()) throw new IllegalArgumentException("Id invalido");
 	}
+	
+	private void verificaApostaAssegurada(Aposta aposta) {
+		if(!(aposta instanceof ApostaAssegurada)) throw new IllegalArgumentException("ESSA APOSTA NÃO POSSUI SEGURO!");
+	}
+	
 }

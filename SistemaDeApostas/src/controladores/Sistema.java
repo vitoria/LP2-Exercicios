@@ -2,6 +2,7 @@ package controladores;
 
 import java.util.ArrayList;
 import classes.Cenario;
+import classes.CenarioBonus;
 import uteis.Validacao;
 
 /**
@@ -13,23 +14,23 @@ import uteis.Validacao;
 
 public class Sistema {
 	
-	private int valorCaixa;
-	private double taxaRetirada;
+	private int caixa;
+	private double taxa;
 	private ArrayList<Cenario> listaCenarios;
 
 	/**
 	 * Cria um novo objeto de sistema, inicializando o valor do caixa e a taxa de ganho com os valores recebido.
 	 * E também inicializa a lista de cenários com um ArrayList vazio
 	 * 
-	 * @param valorCaixa - valor inicial do caixa
-	 * @param taxaRetirada - taxa de ganho do sistema em cima das apostas perdedoras de cada cenario
+	 * @param caixa - valor inicial do caixa
+	 * @param taxa - taxa de ganho do sistema em cima das apostas perdedoras de cada cenario
 	 */
 	
-	public Sistema(int valorCaixa, double taxaRetirada) {
-		Validacao.validaInteiroNaoNegativo("Erro na inicializacao: Caixa nao pode ser inferior a 0", valorCaixa);
-		Validacao.validarPercentage("Erro na inicializacao: Taxa nao pode ser inferior a 0", taxaRetirada);
-		this.valorCaixa = valorCaixa;
-		this.taxaRetirada = taxaRetirada;
+	public Sistema(int caixa, double taxa) {
+		Validacao.validaInteiroNaoNegativo("Erro na inicializacao: Caixa nao pode ser inferior a 0", caixa);
+		Validacao.validarPercentage("Erro na inicializacao: Taxa nao pode ser inferior a 0", taxa);
+		this.caixa = caixa;
+		this.taxa = taxa;
 		this.listaCenarios = new ArrayList<>();
 	}
 
@@ -38,8 +39,8 @@ public class Sistema {
 	 * 
 	 * @return inteiro representando o valor do caixa
 	 */
-	public int getValorCaixa() {
-		return this.valorCaixa;
+	public int getCaixa() {
+		return this.caixa;
 	}
 
 	/**
@@ -48,8 +49,8 @@ public class Sistema {
 	 * @return double representando o valor da taxa
 	 */
 	
-	public double getTaxaRetirada() {
-		return this.taxaRetirada;
+	public double getTaxa() {
+		return this.taxa;
 	}
 	
 	/**
@@ -69,6 +70,26 @@ public class Sistema {
 			throw new IllegalArgumentException("Erro no cadastro de cenario: " + e.getMessage());
 		}
 	}
+	
+	/**
+	 * Cria um novo cenário e o adiciona na lista de cenários do sistema
+	 * 
+	 * @param descricao - descrição do cenário a ser criado
+	 * 
+	 * @return identificador do cenário criado
+	 */
+	
+	public int criaCenario(String descricao, int bonus) {
+		try {
+			if(bonus > caixa) throw new IllegalArgumentException("Bonus invalido");
+			Cenario cenario = new CenarioBonus(listaCenarios.size() + 1, descricao, bonus);
+			listaCenarios.add(cenario);
+			caixa -= bonus;
+			return listaCenarios.size();
+		} catch(IllegalArgumentException e) {
+			throw new IllegalArgumentException("Erro no cadastro de cenario: " + e.getMessage());
+		}
+	}
 
 	/**
 	 * Cria uma representação em String de um cenário determinado, caso ele exista
@@ -81,8 +102,7 @@ public class Sistema {
 	public String exibeCenario(int idCenario) {
 		try {
 			verificaCenarioInvalido(idCenario);
-			Cenario c = listaCenarios.get(idCenario - 1);
-			return c.toString();
+			return listaCenarios.get(idCenario - 1).toString();
 		} catch(IllegalArgumentException e) {
 			throw new IllegalArgumentException("Erro na consulta de cenario: " + e.getMessage());
 		}
@@ -111,10 +131,10 @@ public class Sistema {
 	 * @param previsao - resultado esperado da aposta
 	 */
 	
-	public void cadastraAposta(int idCenario, String nomeApostador, int valorAposta, String previsao) {
+	public int cadastraAposta(int idCenario, String nomeApostador, int valorAposta, String previsao) {
 		try {
 			verificaCenarioInvalido(idCenario);
-			listaCenarios.get(idCenario - 1).cadastraAposta(nomeApostador, valorAposta, previsao);
+			return listaCenarios.get(idCenario - 1).cadastraAposta(nomeApostador, valorAposta, previsao);
 		} catch(IllegalArgumentException e) {
 			throw new IllegalArgumentException("Erro no cadastro de aposta: " + e.getMessage());
 		} catch(NullPointerException e) {
@@ -131,14 +151,15 @@ public class Sistema {
 	 * @param previsao - resultado esperado da aposta
 	 */
 	
-	public void cadastraAposta(int idCenario, String nomeApostador, int valorAposta, String previsao, int valorSeguro, int custoSeguro) {
+	public int cadastraAposta(int idCenario, String nomeApostador, int valorAposta, String previsao, int valorSeguro, int custoSeguro) {
 		try {
 			verificaCenarioInvalido(idCenario);
-			listaCenarios.get(idCenario - 1).cadastraAposta(nomeApostador, valorAposta, previsao, valorSeguro, custoSeguro);
+			caixa += custoSeguro;
+			return listaCenarios.get(idCenario - 1).cadastraAposta(nomeApostador, valorAposta, previsao, valorSeguro, custoSeguro);
 		} catch(IllegalArgumentException e) {
-			throw new IllegalArgumentException("Erro no cadastro de aposta: " + e.getMessage());
+			throw new IllegalArgumentException("Erro no cadastro de aposta assegurada por valor: " + e.getMessage());
 		} catch(NullPointerException e) {
-			throw new NullPointerException("Erro no cadastro de aposta: " + e.getMessage());
+			throw new NullPointerException("Erro no cadastro de aposta assegurada por valor: " + e.getMessage());
 		} 
 	}
 	
@@ -151,23 +172,31 @@ public class Sistema {
 	 * @param previsao - resultado esperado da aposta
 	 */
 	
-	public void cadastraAposta(int idCenario, String nomeApostador, int valorAposta, String previsao, double taxaSeguro, int custoSeguro) {
+	public int cadastraAposta(int idCenario, String nomeApostador, int valorAposta, String previsao, double taxaSeguro, int custoSeguro) {
 		try {
 			verificaCenarioInvalido(idCenario);
-			listaCenarios.get(idCenario - 1).cadastraAposta(nomeApostador, valorAposta, previsao, taxaSeguro, custoSeguro);
+			caixa += custoSeguro;
+			return listaCenarios.get(idCenario - 1).cadastraAposta(nomeApostador, valorAposta, previsao, taxaSeguro, custoSeguro);
 		} catch(IllegalArgumentException e) {
-			throw new IllegalArgumentException("Erro no cadastro de aposta: " + e.getMessage());
+			throw new IllegalArgumentException("Erro no cadastro de aposta assegurada por taxa: " + e.getMessage());
 		} catch(NullPointerException e) {
-			throw new NullPointerException("Erro no cadastro de aposta: " + e.getMessage());
+			throw new NullPointerException("Erro no cadastro de aposta assegurada por taxa: " + e.getMessage());
 		} 
 	}
 	
-	public void alteraSeguroValor(int idCenario, int id, int valor) {
-		listaCenarios.get(idCenario - 1).alteraSeguroValor(id, valor);
+	public int alteraSeguroValor(int idCenario, int id, int valor) {
+		try {
+			verificaCenarioInvalido(idCenario);
+			return listaCenarios.get(idCenario - 1).alteraSeguroValor(id, valor);
+		} catch(IllegalArgumentException e) {
+			throw new IllegalArgumentException("Erro no cadastro de aposta assegurada por taxa: " + e.getMessage());
+		} catch(NullPointerException e) {
+			throw new NullPointerException("Erro no cadastro de aposta assegurada por taxa: " + e.getMessage());
+		}
 	}
 	
-	public void alteraSeguroTaxa(int idCenario, int id, double taxa) {
-		listaCenarios.get(idCenario - 1).alteraSeguroTaxa(id, taxa);
+	public int alteraSeguroTaxa(int idCenario, int id, double taxa) {
+		return listaCenarios.get(idCenario - 1).alteraSeguroTaxa(id, taxa);
 	}
 
 	/**
@@ -182,7 +211,7 @@ public class Sistema {
 		try {
 			verificaCenarioInvalido(idCenario);
 			Cenario c = listaCenarios.get(idCenario - 1);
-			return c.totalValorApostas();
+			return c.valorTotalDasApostas();
 		} catch(IllegalArgumentException e) {
 			throw new IllegalArgumentException("Erro na consulta do valor total de apostas: " + e.getMessage());
 		} catch(NullPointerException e) {
@@ -238,7 +267,9 @@ public class Sistema {
 			verificaCenarioInvalido(idCenario);
 			Cenario c = listaCenarios.get(idCenario - 1);
 			c.finalizaCenario(ocorreu);
-			valorCaixa += getCaixaCenario(idCenario);
+			caixa += getCaixaCenario(idCenario);
+			caixa -= c.pagamentoSeguros();
+			
 		} catch(IllegalArgumentException e) {
 			throw new IllegalArgumentException("Erro ao fechar aposta: " + e.getMessage());
 		} catch(NullPointerException e) {
@@ -259,7 +290,7 @@ public class Sistema {
 	public int getCaixaCenario(int idCenario) {
 		try {
 			verificaCenarioInvalido(idCenario);
-			return (int) Math.floor(listaCenarios.get(idCenario - 1).somaValorApostasPerdedoras() * taxaRetirada);
+			return listaCenarios.get(idCenario - 1).lucroCenario(taxa);
 		} catch(IllegalArgumentException e) {
 			throw new IllegalArgumentException("Erro na consulta do caixa do cenario: " + e.getMessage());
 		} catch(NullPointerException e) {
@@ -281,8 +312,7 @@ public class Sistema {
 		try {
 			verificaCenarioInvalido(idCenario);
 			Cenario c = listaCenarios.get(idCenario - 1);
-			int total = c.somaValorApostasPerdedoras();
-			return total - (int) Math.floor(total * taxaRetirada);
+			return c.rateioCenario(taxa);
 
 		} catch(IllegalArgumentException e) {
 			throw new IllegalArgumentException("Erro na consulta do total de rateio do cenario: " + e.getMessage());

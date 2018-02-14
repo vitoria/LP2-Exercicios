@@ -13,6 +13,8 @@ public class Fachada {
         testes.add("testes_de_aceitacao/us2_test.txt");
         testes.add("testes_de_aceitacao/us3_test.txt");
         testes.add("testes_de_aceitacao/us4_test.txt");
+        testes.add("testes_de_aceitacao/us5_test.txt");
+        testes.add("testes_de_aceitacao/us6_test.txt");
 
         EasyAccept.executeEasyAcceptTests("controladores.Fachada", testes);
     }
@@ -22,12 +24,16 @@ public class Fachada {
 	}
 	
 	public int getCaixa() {
-		return this.sistema.getValorCaixa();
+		return this.sistema.getCaixa();
 	}
 	
 	public int cadastrarCenario(String descricao) {
 		return this.sistema.criaCenario(descricao);
 	} 
+	
+	public int cadastrarCenario(String descricao, int bonus) {
+		return this.sistema.criaCenario(descricao, bonus);
+	}
 	
 	public String exibirCenario(int cenario) {
 		return this.sistema.exibeCenario(cenario);
@@ -41,20 +47,20 @@ public class Fachada {
 		this.sistema.cadastraAposta(cenario, apostador, valor, previsao);
 	}
 	
-	public void cadastrarApostaSeguraValor(int cenario, String apostador, int valor, String previsao, int valorSeguro, int custoSeguro) {
-		this.sistema.cadastraAposta(cenario, apostador, valor, previsao, valorSeguro, custoSeguro);
+	public int cadastrarApostaSeguraValor(int cenario, String apostador, int valor, String previsao, int valorSeguro, int custoSeguro) {
+		return this.sistema.cadastraAposta(cenario, apostador, valor, previsao, valorSeguro, custoSeguro);
 	}
 	
-	public void cadastrarApostaSeguraTaxa(int cenario, String apostador, int valor, String previsao, double taxaSeguro, int custoSeguro) {
-		this.sistema.cadastraAposta(cenario, apostador, valor, previsao, taxaSeguro, custoSeguro);
+	public int cadastrarApostaSeguraTaxa(int cenario, String apostador, int valor, String previsao, double taxaSeguro, int custoSeguro) {
+		return this.sistema.cadastraAposta(cenario, apostador, valor, previsao, taxaSeguro, custoSeguro);
 	}
 	
-	public void alterarSeguroValor(int cenario, int apostaAssegurada, int valor) {
-		this.sistema.alteraSeguroValor(cenario, apostaAssegurada, valor);
+	public int alterarSeguroValor(int cenario, int apostaAssegurada, int valor) {
+		return this.sistema.alteraSeguroValor(cenario, apostaAssegurada, valor);
 	}
 	
-	public void alterarSeguroTaxa(int cenario, int apostaAssegurada, double taxa) {
-		this.sistema.alteraSeguroTaxa(cenario, apostaAssegurada, taxa);
+	public int alterarSeguroTaxa(int cenario, int apostaAssegurada, double taxa) {
+		return this.sistema.alteraSeguroTaxa(cenario, apostaAssegurada, taxa);
 	}
 	
 	public int valorTotalDeApostas(int cenario) {

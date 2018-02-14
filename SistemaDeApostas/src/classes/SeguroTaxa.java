@@ -1,11 +1,10 @@
 package classes;
 
-public class SeguroTaxa extends Seguro {
+public class SeguroTaxa implements Seguro {
 
 	private double taxa;
 	
-	public SeguroTaxa(int custo, double taxa) {
-		super(custo);
+	public SeguroTaxa(double taxa) {
 		this.taxa = taxa;
 	}
 
@@ -18,6 +17,11 @@ public class SeguroTaxa extends Seguro {
 	}
 	
 	public String toString() {
-		return "(TAXA) - " + taxa + "%";
+		return "(TAXA) - " + (taxa * 100) + "%";
+	}
+
+	@Override
+	public int valorAssegurado(int valorAposta) {
+		return (int) (Math.round(valorAposta * taxa));
 	}
 }

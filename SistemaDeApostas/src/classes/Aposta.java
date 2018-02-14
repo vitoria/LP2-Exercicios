@@ -8,10 +8,10 @@ package classes;
  *
  */
 public class Aposta {
+	
 	private String nome;
 	private int valor;
 	private String previsao;
-
 
 	/**
 	 * Cria uma nova aposta a partir do nome, valor e previsao recebidos
@@ -71,6 +71,16 @@ public class Aposta {
 	public String getPrevisao() {
 		return previsao;
 	}
+	
+	public boolean avaliaPrevisao() {
+		if (previsao.equals("VAI ACONTECER")) {
+			return true;
+		} 
+		if (previsao.equals("N VAI ACONTECER")) {
+			return false;
+		}
+		throw new IllegalArgumentException("Previsao invalida");
+	}
 
 	/**
 	 * Criia uma representação em stringo da aposta no seguinte formato:
@@ -80,12 +90,5 @@ public class Aposta {
 	public String toString() {
 		return this.getNome() + " - R$" + this.getValor()/100 + " - " + this.getPrevisao();
 	}
-
-	
-	@Override
-	public boolean equals(Object obj) {
-		return false;
-	}
-	
 	
 }
