@@ -72,18 +72,17 @@ public class Aposta {
 		return previsao;
 	}
 	
-	public boolean avaliaPrevisao() {
-		if (previsao.equals("VAI ACONTECER")) {
-			return true;
-		} 
-		if (previsao.equals("N VAI ACONTECER")) {
-			return false;
-		}
-		throw new IllegalArgumentException("Previsao invalida");
+	/**
+	 * Este metodo calcula a perda gerada pro apostador
+	 * neste caso, eh igual a ao valor apostado, pois a aposta não tem seguro
+	 * @return valor perdido
+	 */
+	public int perdaGerada() {
+		return this.getValor();
 	}
 
 	/**
-	 * Criia uma representação em stringo da aposta no seguinte formato:
+	 * Cria uma representação em stringo da aposta no seguinte formato:
 	 * nome - R$valor - previsao
 	 */
 	@Override

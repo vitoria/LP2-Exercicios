@@ -101,7 +101,7 @@ public class Cenario {
 	 * @param custoSeguro - custo do seguro da aposta
 	 */
 	
-	public int cadastraAposta(String nomeApostador, int valorAposta, String previsao, int valorSeguro, int custoSeguro) {
+	public int cadastraAposta(String nomeApostador, int valorAposta, String previsao, int valorSeguro) {
 		verificaCenarioFechado();
 		Aposta aposta = new ApostaAssegurada(nomeApostador, valorAposta, previsao, valorSeguro);
 		listaApostas.add(aposta);
@@ -118,7 +118,7 @@ public class Cenario {
 	 * @param custoSeguro - custo do seguro da aposta
 	 */
 	
-	public int cadastraAposta(String nomeApostador, int valorAposta, String previsao, double taxaSeguro, int custoSeguro) {
+	public int cadastraAposta(String nomeApostador, int valorAposta, String previsao, double taxaSeguro) {
 		verificaCenarioFechado();
 		Aposta aposta = new ApostaAssegurada(nomeApostador, valorAposta, previsao, taxaSeguro);
 		listaApostas.add(aposta);
@@ -260,8 +260,9 @@ public class Cenario {
 		
 		int perdas = 0;
 		for (Aposta aposta : listaApostas) {
-			if (aposta.getPrevisao().equals(estado.getNome())) {
-					perdas += aposta.getValor();
+			if (aposta.getPrevisao().equals("VAI ACONTECER") && estado.getNome().equals("Finalizado (n ocorreu)") ||
+					aposta.getPrevisao().equals("N VAI ACONTECER") && estado.getNome().equals("Finalizado (ocorreu)")) {
+					perdas += aposta.perdaGerada();
 			}
 		}
 		
@@ -279,21 +280,36 @@ public class Cenario {
 		return this.getId() + " - " + this.getDescricao() + " - " + this.getEstado();
 	}
 
-	//verifications
+	/**
+	 * Verifica se o cenario está aberto e lança uma exceção se for verdade
+	 */
 	private void verificaCenarioAberto() {
 		if(estado.getNome().equals("Nao finalizado"))
 			throw new UnsupportedOperationException("Cenario ainda esta aberto");
 	}
 
+	/**
+	 * Verifica se o cenario está fechado e lança uma exceção se for verdade
+	 */
 	private void verificaCenarioFechado() {
 		if(!estado.getNome().equals("Nao finalizado"))
 			throw new UnsupportedOperationException("Cenario ja esta fechado");
 	}
 	
+	/**
+	 * Verifica se o id recebido para consulta de alguma aposta é valido, 
+	 * senao lança uma exceção
+	 * @param id id da aposta
+	 */
 	private void verificaIdApostaValida(int id) {
 		if(id < 1 && id > listaApostas.size()) throw new IllegalArgumentException("Id invalido");
 	}
 	
+	/**
+	 * Verifica se a aposta recebida é do tipo ApostaAssegurada
+	 * Senão lança uma exceção
+	 * @param aposta aposta a ser verificada
+	 */
 	private void verificaApostaAssegurada(Aposta aposta) {
 		if(!(aposta instanceof ApostaAssegurada)) throw new IllegalArgumentException("ESSA APOSTA NÃO POSSUI SEGURO!");
 	}

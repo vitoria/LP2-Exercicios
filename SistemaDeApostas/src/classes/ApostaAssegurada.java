@@ -1,5 +1,7 @@
 package classes;
 
+import uteis.Validacao;
+
 /**
  * 
  * Esta classe representa uma aposta assegura, que contem um tipo de seguro
@@ -21,6 +23,9 @@ public class ApostaAssegurada extends Aposta {
 	 */
 	public ApostaAssegurada(String nome, int valor, String previsao, double taxaSeguro) {
 		super(nome, valor, previsao);
+		
+		Validacao.validarPercentage("Taxa assegurada inválida!!", taxaSeguro);
+		
 		this.seguro = new SeguroTaxa(taxaSeguro);
 	}
 	
@@ -34,21 +39,36 @@ public class ApostaAssegurada extends Aposta {
 	 */
 	public ApostaAssegurada(String nome, int valor, String previsao, int valorSeguro) {
 		super(nome, valor, previsao);
+		
+		Validacao.validarLessEqualThan("VALOR ASSEGURADO MUITO ALTO!", valorSeguro,
+				super.getValor());
+		
 		this.seguro = new SeguroValor(valorSeguro);
 	}
 	
-	
+	/**
+	 * Este metodo altera o seguro para o tipo de seguro por valor
+	 * @param valorSeguro valor do novo seguro
+	 */
 	public void alteraSeguro(int valorSeguro) {
 		seguro = new SeguroValor(valorSeguro);
 	}
 	
+	/**
+	 * Este metodo altera o seguro para seguro por taxa
+	 * @param taxaSeguro taxa do novo seguro
+	 */
 	public void alteraSeguro(double taxaSeguro) {
 		seguro = new SeguroTaxa(taxaSeguro);
 	}
 	
+	/**
+	 * Este metodo calcula a perda gerada no sistema
+	 * calculado a partir das apostadas perdedoras
+	 */
 	@Override
-	public int getValor() {
-		return super.getValor() - this.seguro.valorAssegurado(this.getValor());
+	public int perdaGerada() {
+		return super.getValor() - seguro.valorAssegurado(super.getValor());
 	}
 	
 	@Override
