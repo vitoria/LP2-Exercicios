@@ -37,8 +37,8 @@ public class SistemaTest {
 			assertEquals(ERRO_INICIALIZA_TAXA_NEGATIVA, e.getMessage());
 		}
 		s = new Sistema(100, 0.1);
-		assertEquals(100, s.getValorCaixa());
-		assertEquals(0.1, s.getTaxaRetirada(), 0.0000001);
+		assertEquals(100, s.getCaixa());
+		assertEquals(0.1, s.getTaxa(), 0.0000001);
 	}
 
 	@Test

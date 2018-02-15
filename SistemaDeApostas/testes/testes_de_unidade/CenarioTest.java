@@ -68,9 +68,9 @@ public class CenarioTest {
 
 	@Test
 	public void testTotalValorApostas() {
-		assertEquals(0, cenario.totalValorApostas());
+		assertEquals(0, cenario.valorTotalDasApostas());
 		cadastraApostas();
-		assertEquals(600, cenario.totalValorApostas());
+		assertEquals(600, cenario.valorTotalDasApostas());
 	}
 
 	@Test
@@ -87,12 +87,12 @@ public class CenarioTest {
 	public void testSomaValorApostasPerdedoras() {
 		cadastraApostas();
 		try {
-			cenario.somaValorApostasPerdedoras();
+			cenario.valorTotalDasApostasPerdedoras();
 		} catch (UnsupportedOperationException e) {
 			assertEquals(ERRO_ABERTO, e.getMessage());
 		}
 		cenario.finalizaCenario(true);
-		assertEquals(400, cenario.somaValorApostasPerdedoras());
+		assertEquals(400, cenario.valorTotalDasApostasPerdedoras());
 	}
 
 	@Test
