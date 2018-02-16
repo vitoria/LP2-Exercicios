@@ -1,8 +1,14 @@
 package controladores;
 
 import java.util.ArrayList;
+import java.util.Collections;
+
 import classes.Cenario;
 import classes.CenarioBonus;
+import classes.ComparaOrdemOriginal;
+import classes.ComparaPorApostas;
+import classes.ComparaPorID;
+import classes.ComparaPorNome;
 import uteis.Validacao;
 
 /**
@@ -13,6 +19,10 @@ import uteis.Validacao;
  */
 public class Sistema {
 	
+	private final int ORDEM_NOME = 1;
+	private final int ORDEM_CADASTRO = 2;
+	private final int ORDEM_APOSTAS = 3;
+	private int ordem;
 	private int caixa;
 	private double taxa;
 	private ArrayList<Cenario> listaCenarios;
@@ -122,6 +132,7 @@ public class Sistema {
 	
 	public String exibeCenarios() {
 		String cenarios = "";
+		Collections.sort(listaCenarios, new ComparaPorID());
 		for(Cenario c : listaCenarios) {
 			cenarios += c.toString() + "\n";
 		}
@@ -179,8 +190,7 @@ public class Sistema {
 	 * @param previsao - resultado esperado da aposta
 	 */
 	
-	public int cadastraAposta(int idCenario, String nomeApostador, int valorAposta, 
-								String previsao, double taxaSeguro, int custoSeguro) {
+	public int cadastraAposta(int idCenario, String nomeApostador, int valorAposta, String previsao, double taxaSeguro, int custoSeguro) {
 		try {
 			verificaCenarioInvalido(idCenario);
 			Validacao.validaInteiroPositivo("CUSTO INVÁLIDO!", custoSeguro);
@@ -360,6 +370,32 @@ public class Sistema {
 			throw new NullPointerException("Erro na consulta do total de rateio do cenario: " + e.getMessage());
 		}
 
+	}
+	
+	public void alteraOrdem(String ordem){
+		if(ordem == null || ordem.trim().equals("")) throw new IllegalArgumentException("Erro ao alterar ordem: Ordem nao pode ser vazia ou nula");
+		switch(ordem.toLowerCase()){
+		case "cadastro":
+			Collections.sort(listaCenarios, new ComparaPorID());
+			break;
+		case "nome":
+			Collections.sort(listaCenarios, new ComparaPorNome());
+			break;
+		case "apostas":
+			Collections.sort(listaCenarios, new ComparaPorApostas());
+			break;
+		default:
+			throw new IllegalArgumentException("Erro ao alterar ordem: Ordem invalida");
+		}
+	}
+	
+	public String exibeCenarioOrdenado(int idCenario){
+		try{
+			verificaCenarioInvalido(idCenario);
+			return listaCenarios.get(idCenario - 1).toString();
+		} catch (IllegalArgumentException e){
+			throw new IllegalArgumentException("Erro na consulta de cenario ordenado: " + e.getMessage());
+		}
 	}
 
 	/**

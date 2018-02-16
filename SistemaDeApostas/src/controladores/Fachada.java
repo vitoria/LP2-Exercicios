@@ -15,6 +15,7 @@ public class Fachada {
         testes.add("testes_de_aceitacao/us4_test.txt");
         testes.add("testes_de_aceitacao/us5_test.txt");
         testes.add("testes_de_aceitacao/us6_test.txt");
+        testes.add("testes_de_aceitacao/us7_test.txt");
 
         EasyAccept.executeEasyAcceptTests("controladores.Fachada", testes);
     }
@@ -85,6 +86,14 @@ public class Fachada {
 	
 	public int getTotalRateioCenario(int cenario) {
 		return this.sistema.getTotalRasteioCenario(cenario);
+	}
+	
+	public void alterarOrdem(String ordem){
+		this.sistema.alteraOrdem(ordem);
+	}
+	
+	public String exibirCenarioOrdenado(int idCenario){
+		return this.sistema.exibeCenarioOrdenado(idCenario);
 	}
 	
 }
