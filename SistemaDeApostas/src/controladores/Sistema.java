@@ -2,10 +2,10 @@ package controladores;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 
 import classes.Cenario;
 import classes.CenarioBonus;
-import classes.ComparaOrdemOriginal;
 import classes.ComparaPorApostas;
 import classes.ComparaPorID;
 import classes.ComparaPorNome;
@@ -19,13 +19,10 @@ import uteis.Validacao;
  */
 public class Sistema {
 	
-	private final int ORDEM_NOME = 1;
-	private final int ORDEM_CADASTRO = 2;
-	private final int ORDEM_APOSTAS = 3;
-	private int ordem;
 	private int caixa;
 	private double taxa;
 	private ArrayList<Cenario> listaCenarios;
+	private Comparator<Cenario> ordem;
 
 	/**
 	 * Cria um novo objeto de sistema, inicializando o valor do caixa e a taxa de ganho com os valores recebido.
@@ -43,6 +40,7 @@ public class Sistema {
 			this.caixa = caixa;
 			this.taxa = taxa;
 			this.listaCenarios = new ArrayList<>();
+			this.ordem = new ComparaPorID();
 		} catch (IllegalArgumentException e) {
 			throw new IllegalArgumentException("Erro na inicializacao: " + e.getMessage());
 		}
@@ -376,13 +374,13 @@ public class Sistema {
 		if(ordem == null || ordem.trim().equals("")) throw new IllegalArgumentException("Erro ao alterar ordem: Ordem nao pode ser vazia ou nula");
 		switch(ordem.toLowerCase()){
 		case "cadastro":
-			Collections.sort(listaCenarios, new ComparaPorID());
+			this.ordem = new ComparaPorID();
 			break;
 		case "nome":
-			Collections.sort(listaCenarios, new ComparaPorNome());
+			this.ordem = new ComparaPorNome();
 			break;
 		case "apostas":
-			Collections.sort(listaCenarios, new ComparaPorApostas());
+			this.ordem = new ComparaPorApostas();
 			break;
 		default:
 			throw new IllegalArgumentException("Erro ao alterar ordem: Ordem invalida");
@@ -392,7 +390,9 @@ public class Sistema {
 	public String exibeCenarioOrdenado(int idCenario){
 		try{
 			verificaCenarioInvalido(idCenario);
-			return listaCenarios.get(idCenario - 1).toString();
+			ArrayList<Cenario> lista = new ArrayList<>(listaCenarios);
+			Collections.sort(lista, this.ordem);
+			return lista.get(idCenario - 1).toString();
 		} catch (IllegalArgumentException e){
 			throw new IllegalArgumentException("Erro na consulta de cenario ordenado: " + e.getMessage());
 		}
