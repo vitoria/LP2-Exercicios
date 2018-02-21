@@ -370,6 +370,11 @@ public class Sistema {
 
 	}
 	
+	/**
+	 * Este metodo altera a ordem do cenario de acordo com
+	 * o tipo especificado por parametro
+	 * @param ordem ordem requerida para ordenar o cenario
+	 */
 	public void alteraOrdem(String ordem){
 		if(ordem == null || ordem.trim().equals("")) throw new IllegalArgumentException("Erro ao alterar ordem: Ordem nao pode ser vazia ou nula");
 		switch(ordem.toLowerCase()){
@@ -387,6 +392,11 @@ public class Sistema {
 		}
 	}
 	
+	/**
+	 * Este metodo exibe o cenario na posição informada da lista de cenarios
+	 * @param idCenario id do cenario na lista de cenarios ordenada
+	 * @return representação em string do cenario
+	 */
 	public String exibeCenarioOrdenado(int idCenario){
 		try{
 			verificaCenarioInvalido(idCenario);

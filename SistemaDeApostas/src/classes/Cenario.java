@@ -98,7 +98,6 @@ public class Cenario {
 	 * @param valorAposta - valor apostado (em cnetavos)
 	 * @param previsao - previsao (vai acontecer ou nao)
 	 * @param valorSeguro - valor do seguro da aposta
-	 * @param custoSeguro - custo do seguro da aposta
 	 */
 	
 	public int cadastraAposta(String nomeApostador, int valorAposta, String previsao, int valorSeguro) {
@@ -115,9 +114,7 @@ public class Cenario {
 	 * @param valorAposta - valor apostado (em cnetavos)
 	 * @param previsao - previsao (vai acontecer ou nao)
 	 * @param taxaSeguro - valor da taxa do seguro da aposta
-	 * @param custoSeguro - custo do seguro da aposta
 	 */
-	
 	public int cadastraAposta(String nomeApostador, int valorAposta, String previsao, double taxaSeguro) {
 		verificaCenarioFechado();
 		Aposta aposta = new ApostaAssegurada(nomeApostador, valorAposta, previsao, taxaSeguro);
@@ -225,7 +222,7 @@ public class Cenario {
 	 * 
 	 * @param taxa A taxa de lucro informada pelo Sistema que contém o Cenario.
 	 * 
-	 * @returns O valor (em centavos) que será destinado ao rateio entre os vencedores.
+	 * @return O valor (em centavos) que será destinado ao rateio entre os vencedores.
 	 * 
 	 */
 	public int rateioCenario(double taxa) {
@@ -238,7 +235,7 @@ public class Cenario {
 	 * 
 	 * @param taxa A taxa de lucro informada pelo Sistema que contém o Cenario.
 	 * 
-	 * @returns O valor (em centavos) de lucro gerado pelo Cenario.
+	 * @return O valor (em centavos) de lucro gerado pelo Cenario.
 	 * 
 	 */
 	public int lucroCenario(double taxa) {
@@ -250,7 +247,7 @@ public class Cenario {
 	 * dastradas no Cenario. Caso esse método seja executado por um Cenario ainda aberto, uma exce-
 	 * ção adequada é lançada.
 	 * 
-	 * @returns O valor total (em centavos) que será pago devido aos Seguros no Cenario.
+	 * @return O valor total (em centavos) que será pago devido aos Seguros no Cenario.
 	 * 
 	 */
 	public int pagamentoSeguros() {
